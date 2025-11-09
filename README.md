@@ -37,6 +37,6 @@
 
 TADs expuestos en `include/`:
 include/TADs.h  
-    TADs.h incluye ->  
-        ./includesBasicos.h  
-        ./ui.h  
+ - TADs.h incluye ->  
+ - - ./includesBasicos.h  
+ - - ./ui.h  
