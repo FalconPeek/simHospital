@@ -36,4 +36,7 @@
 - **Corte de control** → estadísticas por especialidad.
 
 TADs expuestos en `include/`:
-cabeza.h - 
+include/TADs.h
+    TADs.h incluye -> 
+       ./includesBasicos.h
+       ./ui.h
