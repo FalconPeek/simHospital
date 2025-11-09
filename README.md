@@ -1,8 +1,8 @@
-[![Build](https://img.shields.io/badge/build-make-brightgreen)](#)
-[![Lang](https://img.shields.io/badge/C-std%3Ac99-blue)](#)
-[![OS](https://img.shields.io/badge/OS-Linux%20%7C%20WSL%20%7C%20macOS-lightgrey)](#)
-[![License](https://img.shields.io/badge/license-MIT-informational)](#)
-[![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow)](#)
+![Build](https://img.shields.io/badge/build-make-brightgreen)(#)
+![Lang](https://img.shields.io/badge/C-std%3Ac99-blue)(#)
+![OS](https://img.shields.io/badge/OS-Linux%20%7C%20WSL%20%7C%20macOS-lightgrey)(#)
+![License](https://img.shields.io/badge/license-MIT-informational)(#)
+![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow)(#)
 
 > **Objetivo:** simular la atención de pacientes con **prioridades** y **especialidades**, usando **colas de prioridad**, **listas enlazadas**, **pilas**, **archivos binarios**, **ordenamientos** y **búsqueda binaria**. Proyecto pensado para **Algoritmos y Estructuras de Datos II** (C estándar, TADs).
 
