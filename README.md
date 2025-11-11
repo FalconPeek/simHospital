@@ -1,4 +1,3 @@
-![Build](https://img.shields.io/badge/build-make-brightgreen)
 ![Lang](https://img.shields.io/badge/C-std%3Ac99-blue)
 ![OS](https://img.shields.io/badge/OS-Linux%20%7C%20WSL%20%7C%20macOS%20%7C%20Windows-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-informational)
