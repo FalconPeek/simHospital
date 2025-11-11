@@ -7,5 +7,6 @@ int main(void){
     head();
 
 
+    printf("algo");
     return 0;
 }
