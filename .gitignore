@@ -1,2 +1,10 @@
 /build/
 /*.o
+/*.txt
+/*.out
+/*.exe
+
+*.o
+*.exe
+*.out
+*.txt

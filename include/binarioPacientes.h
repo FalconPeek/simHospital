@@ -1,4 +1,9 @@
+#ifndef BINARIOPACIENTES_H
+#define BINARIOPACIENTES_H
 #include "includesBasicos.h"
 
 //Variables Globales
-FILE * archivo;
+FILE * archPacientes;
+
+
+#endif

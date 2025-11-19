@@ -1,3 +1,6 @@
+#ifndef BASICOS_H
+#define BASICOS_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -10,8 +13,19 @@ typedef char tString[50];
 typedef struct {
     int DNI, matricula, nroEmpleado, nroTelefono;
     char fechaNacimiento[9]; //(AAAAMMDD) 8 caracteres + "\0"
-    tString sexo, domicilio, e_mail, nombreApellido, especialidad;
+	char sexo; 
+    tString domicilio, e_mail, nombreApellido;
     int estadoLaboral; // [1]-> Tiempo Completo // [2]-> Medio Tiempo
+	int especialidad;
+	/*
+	Lista de especialidades medicas:
+	Dermatologia
+	Oftalmologia
+	Cirujia General
+	Cardiologia
+	Endocrinologia
+	Otorrinolaringologia
+	*/
 }tMedico;
 
 typedef struct {
@@ -53,4 +67,6 @@ void head(){printf("%s\n", CABEZA_PROGRAMA);}
 void clearScreen(void){
     char *t = getenv("TERM");
     system((t && strcmp(t, "dumb")) ? "clear" : "cls");
-};
+}
+
+#endif
