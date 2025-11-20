@@ -67,8 +67,11 @@ typedef struct {
 void head(){printf("%s\n", CABEZA_PROGRAMA);}
 
 void clearScreen(void){
+    /*
     char *t = getenv("TERM");
     system((t && strcmp(t, "dumb")) ? "clear" : "cls");
+    */
+   printf("\nClear screen\n");
 }
 
 #endif
