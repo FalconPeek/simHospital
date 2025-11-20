@@ -5,7 +5,14 @@
 
 #define PATH_ArchMed "medicos.dat"
 
+//Variables
 FILE *archMed;
+#define MAXMEDICOS 100
+tMedico arrayDeMedicos[MAXMEDICOS];
+int cantidadDeMedicos;
+
+//Prototipos de funciones que hacen corto no se porque...
+void menu();
 
 // Abrir archivo en modo append binario
 void iniciarGrabadoArchivo(void){
@@ -80,11 +87,6 @@ void grabarArchivoMedico(void){
     printf("\nMedico %s agregado al archivo!\n", inputMedico.nombreApellido);
 }
 
-void grabarMedico(void){
-    iniciarGrabadoArchivo();
-    grabarArchivo();
-    finalizarGrabadoArchivo();
-}
 
 // Carga todos los medicos del binario en un array y devuelve cuantos cargo
 int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos){
@@ -106,6 +108,8 @@ int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos){
     printf("Total de medicos agregados al array: %d\n", i);
 
     fclose(archMed);
+    Sleep(3);
+    clearScreen();
     return i;
 }
 
@@ -132,6 +136,7 @@ void guardarMedicosEnArchivo(tMedico medicos[], int cantidad) {
 // Muestra lista y permite borrar por DNI o nombre.
 // Devuelve la NUEVA cantidad de medicos.
 int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
+    clearScreen();
     int opcion;
     int idx;
     int i;
@@ -218,7 +223,101 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     guardarMedicosEnArchivo(medicos, cantidad);
 
     printf("Medico borrado y archivo actualizado correctamente.\n");
+    printf("\nVolviendo al menu medicos!");
+    clearScreen();
     return cantidad;
+}
+
+void grabarMedico(void){
+    iniciarGrabadoArchivo();
+    grabarArchivoMedico();
+    finalizarGrabadoArchivo();
+    cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS);
+}
+
+void reporteMedicos(){
+    
+}
+
+void switchMenuMedicos(){
+    clearScreen();
+        /*Escribimos las opciones en pantalla y luego el switch*/
+        printf("\t\t*** Menu Medicos ***\n\n");
+        //printf("[0] Dar urgencia a pacientes aun no atendidos"); Esto agrega bastante complejidad, vemos si hacemos esta opcion o no una vez terminado todo
+        printf("\n[1] Atender paciente y Dar de alta");
+        printf("\n[2] Agregar Medico");
+        printf("\n[3] Mostrar cantidad de medicos");
+        printf("\n[4] Generar Reporte de todos los medicos");
+        printf("\n[5] Borrar medicos de la Base de Datos");
+        printf("\n[Enter] Volver al Menu Principal");
+        printf("\nOpcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        switch (opcion){
+        case 1:
+            printf("Opcion aun no programada..."); //Si lees esto emma, fijate si lo podes hacer, cualquier cosa preguntame
+            Sleep(2);
+            switchMenuMedicos();
+            break;
+        case 2:
+            grabarMedico();
+            Sleep(2);
+            switchMenuMedicos();
+        break;
+        case 3:
+            printf("\n La cantidad de medicos cargados en la Base de Datos es: %d", cantidadDeMedicos);
+            Sleep(2);
+            switchMenuMedicos();
+        break;
+        case 4:
+            reporteMedicos();
+        break;
+        case 5:
+            cantidadDeMedicos = mostrarYBorrarMedico(arrayDeMedicos, MAXMEDICOS);
+            switchMenuMedicos();
+        break;
+        default:
+            clearScreen();
+            puts("Volviendo al menu principal...");
+            Sleep(2);
+            menu();
+            break;
+        }
+}
+
+/*Menu del apartado medicos:*/
+void menuMedicos(int intentos){
+
+    /*La password es unica solo los medicos la deberian conocer.
+    Pero en este caso la vamos a poner en pantalla ya que los profes no saben la contraseña...*/
+
+    clearScreen();
+
+    printf("Ayuda rapida... la password es: lindstrom\n\n");
+    tString password = "lindstrom";
+    tString passRTA;
+    printf("Usted eligio el apartado medicos... \nIngrese la contraseña: ");
+    scanf(" %59[^\n]", passRTA);
+
+    if(strcmp(password, passRTA) == 0){
+        clearScreen();
+        puts("Contraseña correcta! Abriendo el menu de medicos...");
+        Sleep(2);
+        switchMenuMedicos();
+    } else {
+        clearScreen();
+        if(intentos < 3){
+            printf("\nContraseña incorrecta! Le quedan %d intentos", 3 - intentos);
+            Sleep(2);
+            printf("Esperando 2 segundos para volver a intentar...");
+            menuMedicos(intentos+1);
+        } else {
+            clearScreen();
+            puts("Usted quedo sin intentos, saliendo al menu principal");
+            Sleep(2);
+            menu();
+        }
+    }
 }
 
 #endif

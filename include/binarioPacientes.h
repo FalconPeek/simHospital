@@ -50,7 +50,7 @@ void grabarArchivoPaciente(void){
     printf("\n[7] -> O-");
     printf("\n");
     printf("Elegir tipo de sangre: ");
-    scanf("%d", inputPaciente.tipoDeSangre);
+    scanf("%d", &inputPaciente.tipoDeSangre);
 
     printf("\nObra social del paciente: (OPCIONES)");
     printf("\n[0] -> Sancor Salud");
@@ -61,15 +61,22 @@ void grabarArchivoPaciente(void){
     printf("\n[5] -> OSECAC");
     printf("\n[6] -> Swiss Medical");
     printf("\n[7] -> Particular");
-    scanf("%d", inputPaciente.obraSocial);
+    scanf("%d", &inputPaciente.obraSocial);
 
     printf("\nAlgun contacto de emergencia(NRO TELEFONO): ");
-    scanf("%d", inputPaciente.contactoEmergencia);
+    scanf("%d", &inputPaciente.contactoEmergencia);
 
     printf("\nDNI del paciente: ");
-    scanf("%d", inputPaciente.DNI);
+    scanf("%d", &inputPaciente.DNI);
 
-    inputPaciente.urgencia = -1; //Para que se sepa que paciente aun no se le a dado la revision se usa la flag -1
+    printf("\nUrgencia de atencion: (OPCIONES)");
+    printf("\n[1] -> Atencion Inmediata");
+    printf("\n[2] -> Urgencia Alta");
+    printf("\n[3] -> Urgencia Media");
+    printf("\n[4] -> Urgencia Baja");
+    printf("\n[5] -> No urgente");
+    scanf("%d", &inputPaciente.urgencia);
+    
 
     /*No se agrega la urgencia porque ahora pasa a la
     fase donde el medico debe evaluar la situacion y
@@ -85,7 +92,7 @@ void finalizarGrabadoPaciente(void){
     fclose(archPacientes);
     clearScreen();
     printf("Ya se cerro el archivo... volviendo al menu principal");
-    sleep(3);
+    Sleep(3);
 }
 
 void grabarPaciente(void){

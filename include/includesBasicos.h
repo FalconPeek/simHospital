@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+#include <windows.h>
 #define CABEZA_PROGRAMA "- o - o - o - o - o - o - o - o - o - o - o - o - o -\nInicio del Programa\n- o - o - o - o - o - o - o - o - o - o - o - o - o -\n"
 
 typedef char tString[50];
@@ -31,11 +32,11 @@ typedef struct {
     typedef struct {
     int urgencia;
     /* 
-    Atencion Inmediata [0]
-    Urgencia Alta [1]
-    Urgencia Media [2]
-    Urgencia Baja [3]
-    No Urgente [4]
+    Atencion Inmediata [1]
+    Urgencia Alta [2]
+    Urgencia Media [3]
+    Urgencia Baja [4]
+    No Urgente [5]
     */
     tString nombrePaciente, descripcionProblema, alergias;
     int tipoDeSangre;
