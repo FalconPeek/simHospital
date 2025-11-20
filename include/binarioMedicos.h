@@ -51,7 +51,7 @@ void grabarArchivoMedico(void){
 
     // fechaNacimiento es char[] en tMedico
     printf("\nFecha de Nacimiento (formato AAAAMMDD): ");
-    scanf(" %9s", inputMedico.fechaNacimiento); // ajusta el 9 al tamanio-1 real
+    scanf(" %8s", inputMedico.fechaNacimiento); // ajusta el 9 al tamanio-1 real
 
     // sexo puede ser char o char[2]; aca asumo char
     printf("\nSexo del Medico (M/F): ");
@@ -59,15 +59,15 @@ void grabarArchivoMedico(void){
 
     // Domicilio con espacios
     printf("\nDomicilio: ");
-    scanf(" %59[^\n]", inputMedico.domicilio);  // ajusta 59 al tamanio-1
+    scanf(" %49[^\n]", inputMedico.domicilio);  // ajusta 59 al tamanio-1
 
     // Correo (normalmente sin espacios)
     printf("\nCorreo Electronico: ");
-    scanf(" %59s", inputMedico.e_mail);         // ajusta tamanio
+    scanf(" %49s", inputMedico.e_mail);         // ajusta tamanio
 
     // Nombre y Apellido con espacios
     printf("\nNombre y Apellido: ");
-    scanf(" %59[^\n]", inputMedico.nombreApellido); // ajusta tamanio
+    scanf(" %49[^\n]", inputMedico.nombreApellido); // ajusta tamanio
 
     printf("\nLista de especialidades: "
            "\n[1] Dermatologia"
@@ -266,14 +266,15 @@ void switchMenuMedicos(){
         break;
         case 3:
             printf("\n La cantidad de medicos cargados en la Base de Datos es: %d", cantidadDeMedicos);
-            Sleep(2);
+            Sleep(2500);
             switchMenuMedicos();
         break;
         case 4:
             reporteMedicos();
         break;
         case 5:
-            cantidadDeMedicos = mostrarYBorrarMedico(arrayDeMedicos, MAXMEDICOS);
+            int cantidadActualMedicos = cantidadDeMedicos;
+            cantidadDeMedicos = mostrarYBorrarMedico(arrayDeMedicos, cantidadActualMedicos);
             switchMenuMedicos();
         break;
         default:
@@ -297,7 +298,7 @@ void menuMedicos(int intentos){
     tString password = "lindstrom";
     tString passRTA;
     printf("Usted eligio el apartado medicos... \nIngrese la contraseña: ");
-    scanf(" %59[^\n]", passRTA);
+    scanf(" %49[^\n]", passRTA);
 
     if(strcmp(password, passRTA) == 0){
         clearScreen();

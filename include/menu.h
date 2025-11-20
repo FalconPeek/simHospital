@@ -35,31 +35,34 @@ void simulacionCargaPrograma(){
         case 0:
         clearScreen();
             printf("\nCargando programa.\n");
-            Sleep(1);
+            Sleep(1000);
             break;
         case 1:
         clearScreen();
             printf("\nCargando programa..\n");
-            Sleep(1);
+            Sleep(1000);
             break;
         case 2:
         clearScreen();
             printf("\nCargando programa...\n\nCargando bases de datos.");
-            Sleep(1);
+            Sleep(1000);
+            
             break;
         case 3:
             clearScreen();
             printf("\nCargando bases de datos..\n");
+            Sleep(1000);
+            
             break;
         case 4:
             clearScreen();
             printf("\nCargando bases de datos...\n");
-            Sleep(1);
+            Sleep(1000);
             break;
         case 5:
             clearScreen();
             printf("\nPrograma ya cargado y compilado... Iniciando...\n\n");
-            Sleep(1);    
+            Sleep(1000);    
         break;
         }
     }
@@ -79,7 +82,7 @@ void menu(){
     printf("\n[Enter] - Cerra programa");
     printf("\n\nOpcion: ");
 
-
+    switchMenu();
 }
 
 #endif

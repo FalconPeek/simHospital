@@ -11,7 +11,7 @@ FILE * archPacientes;
 //Grabar archivos pacientes
 //////////////////////////////////////////////////////////////////////////
 
-void iniciarGrabadoPacientes(void){
+void iniciarGrabadoPacientes(){
     archPacientes = fopen(ARCHIVO_PACIENTES, "ab");
 
     if(archPacientes == NULL){
@@ -22,7 +22,7 @@ void iniciarGrabadoPacientes(void){
     }
 }
 
-void grabarArchivoPaciente(void){
+void grabarArchivoPaciente(){
     tPaciente inputPaciente;
 
     clearScreen();
@@ -31,13 +31,13 @@ void grabarArchivoPaciente(void){
     puts("A continuacion... Ingrese los datos de este:");
     
     printf("\nNombre del paciente: ");
-    scanf(" %59[^\n]", inputPaciente.nombrePaciente);
+    scanf(" %49[^\n]", inputPaciente.nombrePaciente);
 
     printf("\nDescripcion del problema: ");
-    scanf(" %59[^\n]", inputPaciente.descripcionProblema);
+    scanf(" %49[^\n]", inputPaciente.descripcionProblema);
 
     printf("\nEl paciente tiene alguna alergia? Respuesta: ");
-    scanf(" %59[^\n]", inputPaciente.alergias);
+    scanf(" %49[^\n]", inputPaciente.alergias);
 
     printf("\nTipo de sangre del paciente: ");
     printf("\n[0] -> A+");
@@ -88,14 +88,14 @@ void grabarArchivoPaciente(void){
     printf("\nPaciente %s agregado al archivo para revision", inputPaciente.nombrePaciente);
 }
 
-void finalizarGrabadoPaciente(void){
+void finalizarGrabadoPaciente(){
     fclose(archPacientes);
     clearScreen();
     printf("Ya se cerro el archivo... volviendo al menu principal");
     Sleep(3);
 }
 
-void grabarPaciente(void){
+void grabarPaciente(){
     iniciarGrabadoPacientes();
     grabarArchivoPaciente();
     finalizarGrabadoPaciente();

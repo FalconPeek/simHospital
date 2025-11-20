@@ -30,7 +30,7 @@ endif
 # Carpetas / SO
 # =========================
 BINDIR  = build
-OBJDIR  = build
+OBJDIR  = build/obj
 LOGDIR  = build/logs
 
 ifeq ($(OS),Windows_NT)
