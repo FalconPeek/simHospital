@@ -28,7 +28,7 @@ typedef struct {
 	*/
 }tMedico;
 
-typedef struct {
+    typedef struct {
     int urgencia;
     /* 
     Atencion Inmediata [0]
@@ -59,6 +59,7 @@ typedef struct {
     [4]-> PAMI
     [5]-> OSECAC
     [6]-> Swiss Medical
+    [7]-> Particular
     */
 }tPaciente;
 

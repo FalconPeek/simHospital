@@ -23,9 +23,8 @@ void finalizarGrabadoArchivo(void){
     printf("\nFin del grabado del medico\nCerrando archivo...\n");
 }
 
-void grabarArchivo(void){
+void grabarArchivoMedico(void){
     tMedico inputMedico;
-    int estadoLaboralTmp = 0; // si no lo tenes en el struct
 
     clearScreen();
     puts("Usted ingreso al menu de Medicos\n");
@@ -75,7 +74,7 @@ void grabarArchivo(void){
     scanf(" %d", &inputMedico.especialidad);
 
     printf("\n[1] Tiempo Completo - [2] Medio tiempo\nEstado laboral: ");
-    scanf(" %d", &estadoLaboralTmp); // o &inputMedico.estadoLaboral si existe
+    scanf(" %d", &inputMedico.estadoLaboral); // o &inputMedico.estadoLaboral si existe
 
     fwrite(&inputMedico, sizeof(tMedico), 1, archMed);
     printf("\nMedico %s agregado al archivo!\n", inputMedico.nombreApellido);
@@ -155,13 +154,13 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     printf("============================\n");
 
     opcion = 0;
-    printf("\n¿Como queres borrar?\n");
+    printf("\nï¿½Como queres borrar?\n");
     printf("[1] Por DNI\n");
     printf("[2] Por Nombre\n");
     printf("Opcion: ");
     scanf(" %d", &opcion);
 
-    idx = -1;  //posición del médico a borrar
+    idx = -1;  //posiciï¿½n del mï¿½dico a borrar
 
     if (opcion == 1) {
         printf("\nIngrese el DNI del medico a borrar: ");
@@ -201,7 +200,7 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
            medicos[idx].DNI,
            medicos[idx].nombreApellido);
 
-    printf("¿Confirmar borrado? (s/n): ");
+    printf("ï¿½Confirmar borrado? (s/n): ");
     scanf(" %c", &confirma);
 
     if (confirma != 's' && confirma != 'S') {
