@@ -6,8 +6,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "TADs.h"          // donde está tMedico
-#include "binarioMedicos.h" // donde está PATH_ArchMed si querés usar cargarDesdeArchivo
+#include "TADs.h"          // donde esta tMedico
+#include "binarioMedicos.h" // donde esta PATH_ArchMed si queres usar cargarDesdeArchivo
 
 /*========================================
 =   TIPOS DE DATOS PARA EL ARBOL         =
@@ -29,26 +29,26 @@ void crearArbolMedico(tArbolMedico **pArbol);
 bool arbolMedicoVacio(tArbolMedico *pArbol);
 
 /* Inserta ordenado por DNI. 
-   Devuelve true si insertó, false si ya existía ese DNI. */
+   Devuelve true si inserto, false si ya existia ese DNI. */
 bool insertarMedicoEnArbol(tArbolMedico **pArbol, tMedico med);
 
 /* Carga todos los medicos de un array en el arbol.
-   Devuelve cuántos insertó OK. */
+   Devuelve cuantos inserto OK. */
 int cargarArbolDesdeArrayMedicos(tArbolMedico **pArbol,
                                  tMedico medicos[],
                                  int cantidad);
 
 /* Carga todos los medicos desde medicos.dat al arbol.
-   Devuelve cuántos insertó OK. */
+   Devuelve cuantos inserto OK. */
 int cargarArbolDesdeArchivoMedicos(tArbolMedico **pArbol);
 
-/* Búsqueda rápida por DNI (BST). Devuelve puntero al nodo o NULL. */
+/* Busqueda rapida por DNI (BST). Devuelve puntero al nodo o NULL. */
 tArbolMedico* buscarMedicoPorDNI(tArbolMedico *pArbol, int dniBuscado);
 
 /* Recorrido IN-ORDEN solo para debug / listados. */
 void visualizarInOrdenMedicos(tArbolMedico *pArbol);
 
-/* Elimina el médico de DNI dado, si existe. */
+/* Elimina el medico de DNI dado, si existe. */
 void eliminarMedicoDelArbol(tArbolMedico **pArbol, int dni);
 
 /* Libera toda la memoria del arbol. */
@@ -91,9 +91,8 @@ bool insertarMedicoEnArbol(tArbolMedico **pArbol, tMedico med) {
     }
 }
 
-int cargarArbolDesdeArrayMedicos(tArbolMedico **pArbol,
-                                 tMedico medicos[],
-                                 int cantidad) {
+int cargarArbolDesdeArrayMedicos(tArbolMedico **pArbol, tMedico medicos[], int cantidad){
+	
     int ok = 0;
     for (int i = 0; i < cantidad; i++) {
         if (insertarMedicoEnArbol(pArbol, medicos[i])) {
@@ -147,7 +146,7 @@ void visualizarInOrdenMedicos(tArbolMedico *pArbol) {
     visualizarInOrdenMedicos(pArbol->hijoDer);
 }
 
-/* Nodo mínimo (menor DNI) en un subárbol */
+/* Nodo minimo (menor DNI) en un subArbol */
 static tArbolMedico* minimoNodoMedico(tArbolMedico *pArbol) {
     if (pArbol == NULL) return NULL;
 
@@ -180,7 +179,7 @@ void eliminarMedicoDelArbol(tArbolMedico **pArbol, int dni) {
             *pArbol = (*pArbol)->hijoIzq;
             free(aux);
         } else {
-            // dos hijos → reemplazar con mínimo del subárbol derecho
+            // dos hijos → reemplazar con mínimo del subArbol derecho
             tNodoMedico *minDer = minimoNodoMedico((*pArbol)->hijoDer);
             (*pArbol)->info = minDer->info;
             eliminarMedicoDelArbol(&(*pArbol)->hijoDer, minDer->info.DNI);

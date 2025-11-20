@@ -60,7 +60,7 @@ typedef struct {
     [5]-> OSECAC
     [6]-> Swiss Medical
     */
-}tAtencion;
+}tPaciente;
 
 void head(){printf("%s\n", CABEZA_PROGRAMA);}
 
