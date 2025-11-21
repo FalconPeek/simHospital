@@ -79,7 +79,7 @@ void menu(){
     printf("\n[2] - Ver cola de Pacientes");
     printf("\n[3] - Mostrar registro de pacientes");
     printf("\n[4] - Abrir menu de medicos (privado)");
-    printf("\n[Enter] - Cerra programa");
+    printf("\n[5] - Cerra programa");
     printf("\n\nOpcion: ");
 
     switchMenu();

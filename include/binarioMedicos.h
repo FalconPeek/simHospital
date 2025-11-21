@@ -249,19 +249,19 @@ void switchMenuMedicos(){
         printf("\n[3] Mostrar cantidad de medicos");
         printf("\n[4] Generar Reporte de todos los medicos");
         printf("\n[5] Borrar medicos de la Base de Datos");
-        printf("\n[Enter] Volver al Menu Principal");
+        printf("\n[6] Volver al Menu Principal");
         printf("\nOpcion: ");
         int opcion;
         scanf("%d", &opcion);
         switch (opcion){
         case 1:
             printf("Opcion aun no programada..."); //Si lees esto emma, fijate si lo podes hacer, cualquier cosa preguntame
-            Sleep(2);
+            Sleep(500);
             switchMenuMedicos();
             break;
         case 2:
             grabarMedico();
-            Sleep(2);
+            Sleep(500);
             switchMenuMedicos();
         break;
         case 3:
@@ -280,7 +280,7 @@ void switchMenuMedicos(){
         default:
             clearScreen();
             puts("Volviendo al menu principal...");
-            Sleep(2);
+            Sleep(500);
             menu();
             break;
         }
@@ -294,28 +294,26 @@ void menuMedicos(int intentos){
 
     clearScreen();
 
-    printf("Ayuda rapida... la password es: lindstrom\n\n");
+    printf("\nAyuda rapida... la password es: lindstrom\n\n");
     tString password = "lindstrom";
     tString passRTA;
-    printf("Usted eligio el apartado medicos... \nIngrese la contraseña: ");
-    scanf(" %49[^\n]", passRTA);
+    printf("\nUsted eligio el apartado medicos... \nIngrese la contraseña: ");
+    scanf("%15s", passRTA);
 
     if(strcmp(password, passRTA) == 0){
         clearScreen();
-        puts("Contraseña correcta! Abriendo el menu de medicos...");
-        Sleep(2);
+        puts("\nContraseña correcta! Abriendo el menu de medicos...\n");
         switchMenuMedicos();
     } else {
         clearScreen();
         if(intentos < 3){
             printf("\nContraseña incorrecta! Le quedan %d intentos", 3 - intentos);
-            Sleep(2);
-            printf("Esperando 2 segundos para volver a intentar...");
+            printf("\nEsperando 2 segundos para volver a intentar...");
+            Sleep(2000); // usar ms
             menuMedicos(intentos+1);
         } else {
             clearScreen();
-            puts("Usted quedo sin intentos, saliendo al menu principal");
-            Sleep(2);
+            puts("\nUsted quedo sin intentos, saliendo al menu principal");
             menu();
         }
     }

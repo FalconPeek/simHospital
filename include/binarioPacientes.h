@@ -92,7 +92,7 @@ void finalizarGrabadoPaciente(){
     fclose(archPacientes);
     clearScreen();
     printf("Ya se cerro el archivo... volviendo al menu principal");
-    Sleep(3);
+    Sleep(3000);
 }
 
 void grabarPaciente(){
