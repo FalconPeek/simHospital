@@ -6,7 +6,15 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-#include <windows.h>
+#include <time.h>
+
+/* Implementacion simple de Sleep usando time.h (milisegundos). */
+static void Sleep(unsigned int milliseconds) {
+    clock_t inicio = clock();
+    while ((clock() - inicio) * 1000 / CLOCKS_PER_SEC < milliseconds) {
+        /* bucle de espera */
+    }
+}
 #define CABEZA_PROGRAMA "- o - o - o - o - o - o - o - o - o - o - o - o - o -\nInicio del Programa\n- o - o - o - o - o - o - o - o - o - o - o - o - o -\n"
 
 typedef char tString[50];
