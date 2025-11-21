@@ -6,6 +6,9 @@
 
 //Variables Globales
 FILE * archPacientes;
+#define MAXPACIENTES 100
+tPaciente arrayDePacientes[MAXPACIENTES];
+int cantidadDePacientes;
 
 //////////////////////////////////////////////////////////////////////////
 //Grabar archivos pacientes
@@ -99,5 +102,130 @@ void grabarPaciente(){
     iniciarGrabadoPacientes();
     grabarArchivoPaciente();
     finalizarGrabadoPaciente();
+}
+
+/* Carga todos los pacientes del binario en un array y devuelve cuantos cargo */
+int cargarPacientesEnArray(tPaciente arrayPac[], int maxPacientes){
+    int i = 0;
+
+    archPacientes = fopen(ARCHIVO_PACIENTES, "rb");
+    if (archPacientes == NULL) {
+        printf("Error al abrir pacientes.dat\n");
+        exit(EXIT_FAILURE);
+    }
+
+    while (i < maxPacientes &&
+           fread(&arrayPac[i], sizeof(tPaciente), 1, archPacientes) == 1) {
+        i++;
+    }
+
+    fclose(archPacientes);
+    printf("Total de pacientes cargados en memoria: %d\n", i);
+    Sleep(3);
+    clearScreen();
+    return i;
+}
+
+/* Guarda TODO el array de pacientes en el archivo binario (sobrescribe) */
+void guardarPacientesEnArchivo(tPaciente pacientes[], int cantidad) {
+    FILE *f = fopen(ARCHIVO_PACIENTES, "wb");
+    if (f == NULL) {
+        printf("No se pudo abrir pacientes.dat para escritura\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (cantidad > 0) {
+        fwrite(pacientes, sizeof(tPaciente), cantidad, f);
+    }
+
+    fclose(f);
+}
+
+// Muestra lista y permite borrar por DNI o nombre. Devuelve la NUEVA cantidad.
+int mostrarYBorrarPaciente(tPaciente pacientes[], int cantidad) {
+    int i;
+    int opcion;
+    int idx = -1;
+    int dniBuscado;
+    tString nombreBuscado;
+    char confirma;
+
+    if (cantidad == 0) {
+        printf("No hay pacientes cargados.\n");
+        return 0;
+    }
+
+    printf("\n===== LISTA DE PACIENTES =====\n");
+    for (i = 0; i < cantidad; i++) {
+        printf("%2d) DNI: %d  |  Nombre: %s\n",
+               i + 1,
+               pacientes[i].DNI,
+               pacientes[i].nombrePaciente);
+    }
+    printf("==============================\n");
+
+    printf("\n�Como queres borrar?\n");
+    printf("[1] Por DNI\n");
+    printf("[2] Por Nombre\n");
+    printf("Opcion: ");
+    scanf(" %d", &opcion);
+
+    if (opcion == 1) {
+        printf("\nIngrese el DNI del paciente a borrar: ");
+        scanf(" %d", &dniBuscado);
+
+        for (i = 0; i < cantidad; i++) {
+            if (pacientes[i].DNI == dniBuscado) {
+                idx = i;
+                break;
+            }
+        }
+    }
+    else if (opcion == 2) {
+        printf("\nIngrese el nombre COMPLETO del paciente a borrar: ");
+        scanf(" %49[^\n]", nombreBuscado);
+
+        for (i = 0; i < cantidad; i++) {
+            if (strcmp(pacientes[i].nombrePaciente, nombreBuscado) == 0) {
+                idx = i;
+                break;
+            }
+        }
+    }
+    else {
+        printf("Opcion invalida.\n");
+        return cantidad;
+    }
+
+    if (idx == -1) {
+        printf("No se encontro el paciente.\n");
+        return cantidad;
+    }
+
+    printf("\nVas a borrar al siguiente paciente:\n");
+    printf("DNI: %d\nNombre: %s\n",
+           pacientes[idx].DNI,
+           pacientes[idx].nombrePaciente);
+
+    printf("�Confirmar borrado? (s/n): ");
+    scanf(" %c", &confirma);
+
+    if (confirma != 's' && confirma != 'S') {
+        printf("Borrado cancelado.\n");
+        return cantidad;
+    }
+
+    for (i = idx; i < cantidad - 1; i++) {
+        pacientes[i] = pacientes[i + 1];
+    }
+    cantidad--;
+
+    guardarPacientesEnArchivo(pacientes, cantidad);
+
+    printf("Paciente borrado y archivo actualizado correctamente.\n");
+    printf("\nVolviendo al menu principal...\n");
+    Sleep(2);
+    clearScreen();
+    return cantidad;
 }
 #endif

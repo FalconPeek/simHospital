@@ -273,9 +273,11 @@ void switchMenuMedicos(){
             reporteMedicos();
         break;
         case 5:
-            int cantidadActualMedicos = cantidadDeMedicos;
-            cantidadDeMedicos = mostrarYBorrarMedico(arrayDeMedicos, cantidadActualMedicos);
-            switchMenuMedicos();
+            {
+                int cantidadActualMedicos = cantidadDeMedicos;
+                cantidadDeMedicos = mostrarYBorrarMedico(arrayDeMedicos, cantidadActualMedicos);
+                switchMenuMedicos();
+            }
         break;
         default:
             clearScreen();
