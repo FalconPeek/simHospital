@@ -81,17 +81,18 @@ void menu(){
     
     clearScreen();
 
-    printf("\t=============================================\n");
-    printf("\t================Menu Principal===============\n");
-    printf("\t=============================================\n");
+    cprintf(COL_GREEN, "\t=============================================\n");
+    cprintf(COL_GREEN, "\t================Menu Principal===============\n");
+    cprintf(COL_GREEN, "\t=============================================\n");
 
-    printf("\n[1] - Agregar paciente");
-    printf("\n[2] - Ver cola de Pacientes");
-    printf("\n[3] - Ver lista de pacientes por DNI y Nombre");
-    printf("\n[4] - Mostrar registro de pacientes");
-    printf("\n[5] - Abrir menu de medicos (privado)");
-    printf("\n[6] - Cerra programa");
-    printf("\n\nOpcion: ");
+    printf("\n[1]"); cprintf(COL_BLUE, " - Agregar paciente");
+    printf("\n[2]"); cprintf(COL_BLUE, " - Ver cola de Pacientes");
+    printf("\n[3]"); cprintf(COL_BLUE, " - Ver lista de pacientes por DNI y Nombre");
+    printf("\n[4]"); cprintf(COL_BLUE, " - Mostrar registro de pacientes");
+    printf("\n[5]"); cprintf(COL_BLUE, " - Abrir menu de medicos (privado)");
+    printf("\n[6]"); cprintf(COL_BLUE, " - Cerra programa");
+    cprintf(COL_BRIGHT_BLUE, "\n\nOpcion: ");
+
 
     switchMenu();
 }
