@@ -102,7 +102,6 @@ int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos, bool mostrar){
         Sleep(1000);
         if(archMed != NULL){ printf("\n\nArchivo creado con exitos, nombre archivo: %s\n\n", PATH_ArchMed); }
         Sleep(1000);
-        menu();
         } else {
         printf("Archivo de medicos abierto en modo lectura.(Para cargar en ARRAY)\n");
         }

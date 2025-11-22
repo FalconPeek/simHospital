@@ -266,7 +266,6 @@ int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar
         Sleep(1000);
         if(archPacientes != NULL){ printf("\n\nArchivo creado con exitos, nombre archivo: %s\n\n", PATH_ArchPacientes); }
         Sleep(3000);
-        menu();
         } else {
         printf("\nArchivo de pacientes abierto en modo lectura. (Para cargar en ARRAY)\n");
         }

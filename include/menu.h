@@ -11,7 +11,7 @@ void switchMenu(){
         break;
         case 2:
             printf("Todavia no se programo esta opcion...");
-            Sleep(2);
+            Sleep(2000);
             menu();
         break;
         case 3:
@@ -34,7 +34,7 @@ void switchMenu(){
 //Animacion de carga del programa
 void cargarAssets(){
     int seg;
-    for(seg=0; seg < 6; seg++){ /*For que se usa pasa simular la carga del programa*/
+    for(seg=0; seg < 7; seg++){ /*For que se usa pasa simular la carga del programa*/
         switch (seg)
         {
         case 0:
@@ -63,10 +63,13 @@ void cargarAssets(){
             clearScreen();
             printf("\nCargando bases de datos...\n");
             cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS, true);
-            cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, true);
             Sleep(2000);
             break;
         case 5:
+            cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, true);
+            Sleep(1500);    
+        break;
+        case 6:
             printf("\nPrograma ya cargado y compilado... Iniciando...\n\n");
             Sleep(1000);    
         break;
