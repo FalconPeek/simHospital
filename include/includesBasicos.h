@@ -29,7 +29,7 @@ typedef struct {
 	*/
 }tMedico;
 
-    typedef struct {
+typedef struct {
     int urgencia;
     /* 
     Atencion Inmediata [1]
@@ -38,7 +38,7 @@ typedef struct {
     Urgencia Baja [4]
     No Urgente [5]
     */
-    tString nombrePaciente, descripcionProblema, alergias;
+    tString nombrePaciente, descripcionProblema, alergias, razonDelAlta;
     int tipoDeSangre;
     /*
     [0]-> A+
@@ -67,11 +67,11 @@ typedef struct {
 void head(){printf("%s\n", CABEZA_PROGRAMA);}
 
 void clearScreen(void){
-    /*
+
     char *t = getenv("TERM");
     system((t && strcmp(t, "dumb")) ? "clear" : "cls");
-    */
-   printf("\nClear screen\n");
+
+   //printf("\nClear screen\n");
 }
 
 #endif

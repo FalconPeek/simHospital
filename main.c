@@ -1,6 +1,7 @@
 #include "include/TADs.h"
 
 
+
 ////////////////////////////////////////////////
 /*
 ESTO ES UN MAIN PROVISORIO ESTABA VIENDO QUE TODO FUNCIONE NADA MAS
@@ -10,12 +11,11 @@ ESTO ES UN MAIN PROVISORIO ESTABA VIENDO QUE TODO FUNCIONE NADA MAS
 
 
 int main(void) {
-
-    cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS);
+    clearScreen(); //Borra el cmd
     
-    simulacionCargaPrograma();
+    cargarAssets(); //Animacion de carga mas carga/creacion de archivos
 
-    menu();
+    menu(); //Menu principal
     return 0;
 }
 

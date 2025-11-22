@@ -13,6 +13,7 @@ int cantidadDeMedicos;
 
 //Prototipos de funciones que hacen corto no se porque...
 void menu();
+void switchMenuMedicos();
 
 // Abrir archivo en modo append binario
 void iniciarGrabadoArchivo(void){
@@ -24,12 +25,11 @@ void iniciarGrabadoArchivo(void){
         printf("Archivo abierto en modo append binario\n");
     }
 }
-
 void finalizarGrabadoArchivo(void){
     fclose(archMed);
     printf("\nFin del grabado del medico\nCerrando archivo...\n");
+    Sleep(2000);
 }
-
 void grabarArchivoMedico(void){
     tMedico inputMedico;
 
@@ -40,11 +40,13 @@ void grabarArchivoMedico(void){
     printf("\nDNI del medico: ");
     scanf(" %d", &inputMedico.DNI);
 
-    printf("\nMatricula del medico: ");
-    scanf(" %d", &inputMedico.matricula);
+    srand(inputMedico.DNI);
+    printf("\nMatricula del medico: %d", rand());
+    Sleep(1000);
 
-    printf("\nNumero de empleado: ");
-    scanf(" %d", &inputMedico.nroEmpleado);
+    inputMedico.nroEmpleado = cantidadDeMedicos+1;
+    printf("\nNumero de empleado: %d", inputMedico.nroEmpleado);
+    Sleep(1000);
 
     printf("\nNumero de telefono: ");
     scanf(" %d", &inputMedico.nroTelefono);
@@ -89,30 +91,43 @@ void grabarArchivoMedico(void){
 
 
 // Carga todos los medicos del binario en un array y devuelve cuantos cargo
-int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos){
-    archMed = fopen(PATH_ArchMed, "rb");
-    if (archMed == NULL) {
-        printf("Error al abrir el archivo\n");
-        exit(EXIT_FAILURE);
-    } else {
-        printf("Archivo de medicos abierto en modo lectura.(Para cargar en ARRAY)\n");
-    }
-
+int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos, bool mostrar){
     int i = 0;
-    while (i < maxMedicos &&
+    if(mostrar){
+        archMed = fopen(PATH_ArchMed, "rb");
+        if (archMed == NULL) {
+        printf("\n[ERROR] -> Error al abrir el archivo\n");
+        printf("\nCreando archivo... Volviendo al menu principal\n\n");
+        archMed = fopen(PATH_ArchMed, "wb"); //Esto deberia crear el archivo med
+        Sleep(1000);
+        if(archMed != NULL){ printf("\n\nArchivo creado con exitos, nombre archivo: %s\n\n", PATH_ArchMed); }
+        Sleep(1000);
+        menu();
+        } else {
+        printf("Archivo de medicos abierto en modo lectura.(Para cargar en ARRAY)\n");
+        }
+
+        while (i < maxMedicos &&
            fread(&arrayMed[i], sizeof(tMedico), 1, archMed) == 1) {
-        i++;
+            i++;
+        }
+        printf("\nTotal de medicos agregados al array: %d\n", i);
+
+        fclose(archMed);
+        Sleep(3000);
+        
+    } else {
+        archMed = fopen(PATH_ArchMed, "rb");
+        while (i < maxMedicos &&
+           fread(&arrayMed[i], sizeof(tMedico), 1, archMed) == 1) {
+            i++;
+        }
+        fclose(archMed);
     }
-
-    puts("Todos los medicos agregados al array con exito!");
-    printf("Total de medicos agregados al array: %d\n", i);
-
-    fclose(archMed);
-    Sleep(3);
-    clearScreen();
+    
     return i;
 }
-
+// TERMINADA Y FUNCIONANDO
 
 
 // Guarda TODO el array en el archivo binario (sobrescribe)
@@ -120,7 +135,8 @@ void guardarMedicosEnArchivo(tMedico medicos[], int cantidad) {
     FILE *f = fopen(PATH_ArchMed, "wb");
     if (f == NULL) {
         printf("Error al abrir medicos.dat para escritura.\n");
-        exit(EXIT_FAILURE);
+        Sleep(1000);
+        menu();
     }
 
     if (cantidad > 0) {
@@ -132,6 +148,31 @@ void guardarMedicosEnArchivo(tMedico medicos[], int cantidad) {
 
     fclose(f);
 }
+// TERMINADA Y FUNCIONANDO
+
+
+void mostrarCantidadMedicos(tMedico medicos[], int cantidad){
+    int i;
+    if (cantidad == 0) {
+        printf("\nNo hay medicos cargados.\n");
+        Sleep(1500);
+        switchMenuMedicos();
+    }
+
+    printf("\n===== LISTA DE MEDICOS =====\n");
+    for (i = 0; i < cantidad; i++) {
+        printf("%2d) DNI: %d  |  Nombre: %s\n",
+               i + 1,
+               medicos[i].DNI,
+               medicos[i].nombreApellido);
+    }
+    printf("============================\n");
+    int scan;
+    printf("\n\n\t\tPrecione 1 luego Enter para volver a seleccionar una opcion\t");
+    scanf("%d", &scan); if(scan == 1) {switchMenuMedicos();}
+}
+// TERMINADA Y FUNCIONANDO
+
 
 // Muestra lista y permite borrar por DNI o nombre.
 // Devuelve la NUEVA cantidad de medicos.
@@ -227,17 +268,19 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     clearScreen();
     return cantidad;
 }
+// TERMINADA Y FUNCIONANDO
+
 
 void grabarMedico(void){
     iniciarGrabadoArchivo();
     grabarArchivoMedico();
     finalizarGrabadoArchivo();
-    cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS);
+    cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS, false);
 }
+// TERMINADA Y FUNCIONANDO
 
-void reporteMedicos(){
-    
-}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int cantidadActualMedicos; //Se usa en linea 286
 
 void switchMenuMedicos(){
     clearScreen();
@@ -247,9 +290,8 @@ void switchMenuMedicos(){
         printf("\n[1] Atender paciente y Dar de alta");
         printf("\n[2] Agregar Medico");
         printf("\n[3] Mostrar cantidad de medicos");
-        printf("\n[4] Generar Reporte de todos los medicos");
-        printf("\n[5] Borrar medicos de la Base de Datos");
-        printf("\n[6] Volver al Menu Principal");
+        printf("\n[4] Borrar medicos de la Base de Datos");
+        printf("\n[5] Volver al Menu Principal");
         printf("\nOpcion: ");
         int opcion;
         scanf("%d", &opcion);
@@ -265,24 +307,19 @@ void switchMenuMedicos(){
             switchMenuMedicos();
         break;
         case 3:
-            printf("\n La cantidad de medicos cargados en la Base de Datos es: %d", cantidadDeMedicos);
-            Sleep(2500);
-            switchMenuMedicos();
+            mostrarCantidadMedicos(arrayDeMedicos, cantidadDeMedicos);
         break;
         case 4:
-            reporteMedicos();
-        break;
-        case 5:
-            int cantidadActualMedicos = cantidadDeMedicos;
+            cantidadActualMedicos = cantidadDeMedicos;
             cantidadDeMedicos = mostrarYBorrarMedico(arrayDeMedicos, cantidadActualMedicos);
             switchMenuMedicos();
         break;
-        default:
+        case 5:
             clearScreen();
             puts("Volviendo al menu principal...");
-            Sleep(500);
+            Sleep(1500);
             menu();
-            break;
+        break;
         }
 }
 
@@ -297,7 +334,7 @@ void menuMedicos(int intentos){
     printf("\nAyuda rapida... la password es: lindstrom\n\n");
     tString password = "lindstrom";
     tString passRTA;
-    printf("\nUsted eligio el apartado medicos... \nIngrese la contraseña: ");
+    printf("\nUsted eligio el apartado medicos... \nIngrese la contrasenia: ");
     scanf("%15s", passRTA);
 
     if(strcmp(password, passRTA) == 0){
@@ -307,9 +344,9 @@ void menuMedicos(int intentos){
     } else {
         clearScreen();
         if(intentos < 3){
-            printf("\nContraseña incorrecta! Le quedan %d intentos", 3 - intentos);
-            printf("\nEsperando 2 segundos para volver a intentar...");
-            Sleep(2000); // usar ms
+            printf("\nContrasenia incorrecta! Le quedan %d intentos", 3 - intentos);
+            printf("\nEspere 4 segundos para volver a intentar...");
+            Sleep(4000); // usar ms
             menuMedicos(intentos+1);
         } else {
             clearScreen();

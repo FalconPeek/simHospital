@@ -15,19 +15,24 @@ void switchMenu(){
             menu();
         break;
         case 3:
-            printf("Todavia no se programo esta funcion...");
-            Sleep(2);
-            menu();
+            mostrarCantidadPacientes(arrayPacientes, cantidadDePacientesTotalGral);
         break;
         case 4:
+            reporteDePacietes();
+        break;
+        case 5:
             menuMedicos(0);
         break;
-        default: exit(EXIT_SUCCESS);
+        case 6:
+            printf("\n\nCerrando programa...\n\n");
+            Sleep(1500);
+            exit(EXIT_SUCCESS);
         break;
     }
 }
 
-void simulacionCargaPrograma(){
+//Animacion de carga del programa
+void cargarAssets(){
     int seg;
     for(seg=0; seg < 6; seg++){ /*For que se usa pasa simular la carga del programa*/
         switch (seg)
@@ -57,10 +62,11 @@ void simulacionCargaPrograma(){
         case 4:
             clearScreen();
             printf("\nCargando bases de datos...\n");
-            Sleep(1000);
+            cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS, true);
+            cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, true);
+            Sleep(2000);
             break;
         case 5:
-            clearScreen();
             printf("\nPrograma ya cargado y compilado... Iniciando...\n\n");
             Sleep(1000);    
         break;
@@ -71,15 +77,17 @@ void simulacionCargaPrograma(){
 void menu(){
     
     clearScreen();
+
     printf("\t=============================================\n");
     printf("\t================Menu Principal===============\n");
     printf("\t=============================================\n");
 
     printf("\n[1] - Agregar paciente");
     printf("\n[2] - Ver cola de Pacientes");
-    printf("\n[3] - Mostrar registro de pacientes");
-    printf("\n[4] - Abrir menu de medicos (privado)");
-    printf("\n[5] - Cerra programa");
+    printf("\n[3] - Ver lista de pacientes por DNI y Nombre");
+    printf("\n[4] - Mostrar registro de pacientes");
+    printf("\n[5] - Abrir menu de medicos (privado)");
+    printf("\n[6] - Cerra programa");
     printf("\n\nOpcion: ");
 
     switchMenu();
