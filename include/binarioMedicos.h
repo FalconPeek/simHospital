@@ -10,6 +10,11 @@
 //Prototipos de funciones que hacen corto no se porque...
 void menu();
 void switchMenuMedicos();
+int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar);
+void iniciarCola(tColaPacientes* colaPacientes);
+void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes);
+bool colaVacia(tColaPacientes colaPacientes);
+int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[]);
 
 // Abrir archivo en modo append binario
 void iniciarGrabadoArchivo(void){
@@ -181,7 +186,9 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     char confirma;
 
     if (cantidad == 0) {
-        printf("No hay medicos cargados.\n");
+        cprintf(COL_YELLOW, "[WARNING] -> No hay medicos cargados.\n");
+        Sleep(2500);
+        cprintf(COL_BLUE, "Volviendo al menu medicos...");
         return 0;
     }
 
@@ -195,7 +202,7 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     printf("============================\n");
 
     opcion = 0;
-    printf("\n�Como queres borrar?\n");
+    printf("\n¿Como desea borrar?\n");
     printf("[1] Por DNI\n");
     printf("[2] Por Nombre\n");
     printf("Opcion: ");
@@ -280,21 +287,61 @@ int cantidadActualMedicos; //Se usa en linea 286
 void switchMenuMedicos(){
     clearScreen();
         /*Escribimos las opciones en pantalla y luego el switch*/
-        printf("\t\t*** Menu Medicos ***\n\n");
+        cprintf(COL_BRIGHT_GREEN, "\t\t*** Menu Medicos ***\n\n");
         //printf("[0] Dar urgencia a pacientes aun no atendidos"); Esto agrega bastante complejidad, vemos si hacemos esta opcion o no una vez terminado todo
-        printf("\n[1] Atender paciente y Dar de alta");
-        printf("\n[2] Agregar Medico");
-        printf("\n[3] Mostrar cantidad de medicos");
-        printf("\n[4] Borrar medicos de la Base de Datos");
-        printf("\n[5] Volver al Menu Principal");
-        printf("\nOpcion: ");
+        cprintf(COL_BLUE, "\n[1] "); printf("-> Atender paciente y Dar de alta");
+        cprintf(COL_BLUE, "\n[2] "); printf("-> Agregar Medico");
+        cprintf(COL_BLUE, "\n[3] "); printf("-> Mostrar cantidad de medicos");
+        cprintf(COL_BLUE, "\n[4] "); printf("-> Borrar medicos de la Base de Datos");
+        cprintf(COL_BLUE, "\n[5] "); printf("-> Volver al Menu Principal");
+        cprintf(COL_BLUE, "\nOpcion: ");
         int opcion;
         scanf("%d", &opcion);
         switch (opcion){
         case 1:
-            printf("Opcion aun no programada..."); //Si lees esto emma, fijate si lo podes hacer, cualquier cosa preguntame
-            Sleep(500);
+            if(cantidadDeMedicos == 0){
+                cprintf(COL_BRIGHT_RED, "\n[ERROR] -> No hay medicos cargados\n");
+                printf("\n\nIngrese 1 y ENTER para volver al menu de medicos: ");
+                int i;
+                scanf("%d", &i);
+                switchMenuMedicos();
+            } else {
+            /* 
+             * 1) Sincronizamos ARRAY de pacientes con el archivo
+             * 2) Reconstruimos la cola solo con pacientes NOALTA
+             * 3) Atendemos al primero y damos de alta
+             * 4) Mostramos cuantos quedan sin alta
+             */
+            // 1) Cargar pacientes desde el archivo al array global
+            cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, false);
+            if (cantidadDePacientesTotalGral == 0) {
+                cprintf(COL_BRIGHT_MAGENTA, "\n\nNo hay pacientes cargados en el sistema.\n");
+                Sleep(2000);
+                switchMenuMedicos();
+                break;
+            }
+            // 2) Reconstruir la cola con los pacientes que siguen con NOALTA
+            iniciarCola(&colaPacientes);
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
+            if (colaVacia(colaPacientes)) {
+                cprintf(COL_RED, "\n\nNo hay pacientes en espera para dar de alta (ninguno con NOALTA).\n");
+                Sleep(2500);
+                switchMenuMedicos();
+                break;
+            }
+            // 3) Atender y dar de alta al primero de la cola
+            int restantesSinAlta = diagnosticarDarAlta(&colaPacientes, arrayPacientes);
+            // 4) Feedback operativo
+            if (restantesSinAlta > 0) {
+                cprintf(COL_BRIGHT_GREEN, "\n\nQuedan %d pacientes sin dar de alta.\n", restantesSinAlta);
+            } else {
+                cprintf(COL_BRIGHT_YELLOW, "\n\nNo quedan pacientes pendientes de alta.\n");
+            }
+            printf("\n\nIngrese 1 y ENTER para volver al menu de medicos: ");
+            int i;
+            scanf("%d", &i);
             switchMenuMedicos();
+            }
             break;
         case 2:
             grabarMedico();

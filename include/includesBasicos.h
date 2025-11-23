@@ -95,7 +95,13 @@ typedef struct{
 FILE * archPacientes;
 #define MAXPACIENTES 100
 tPaciente arrayPacientes[MAXPACIENTES];
+
+// total de registros en el archivo (todos, con alta y sin alta)
 int cantidadDePacientesTotalGral;
+
+// cantidad de pacientes que siguen sin alta (razonDelAlta == "NOALTA")
+int cantidadPacientesSinAlta;
+
 tColaPacientes colaPacientes;
 
 #endif

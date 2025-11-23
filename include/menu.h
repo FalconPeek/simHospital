@@ -7,9 +7,13 @@ void switchMenu(){
     switch (opcion){
         case 1:
             grabarPaciente();
+            // recargo array desde archivo para incluir el nuevo paciente
+            cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, false);
+            // si la cola ya está inicializada, podrías rearmarla
+            iniciarCola(&colaPacientes);
             agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
             menu();
-        break;
+            break;
         case 2:
             visualizarCola(colaPacientes);
         break;

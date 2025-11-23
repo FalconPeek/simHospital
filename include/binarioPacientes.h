@@ -147,7 +147,7 @@ void iniciarCortePacientes(){
     cantPacParticular = 0;
     totalObraSocial = 0;
     printf("\t\t\t*** REPORTE DE PACIENTES ***\n");
-    printf("\nNombre y Apellido\tEstado Actual\t\tUrgencia\tContacto De Emergencia\tDNI\tObra Social\n");
+    printf("\nNombre y Apellido\tEstado Actual\t\tUrgencia\t\tContacto De Emergencia\tDNI\tObra Social\n");
 }
 void procesoCortePacientes(){
     while(!feof(archPacientes)){
@@ -232,7 +232,7 @@ void finalizarCortePacientes(){
     printf("Total de pacientes: %d\n", cantidadTotalDePacientes);
     printf("Cantidad de pacientes particulares: %d\n", cantPacParticular);
     totalObraSocial += cantPacSancor + cantPacIOFA + cantPacOSDE + cantPacIOSCOR + cantPacPAMI + cantPacOSECAC + cantPacSwissMedical;
-    float porcentajeSinObraSocial = (cantPacParticular * 100) / totalObraSocial;
+    float porcentajeSinObraSocial = (cantPacParticular * 100) / cantidadTotalDePacientes;
     printf("Porcentaje sin obra social: %.2f\n", porcentajeSinObraSocial);
     printf("Cantidad de pacientes con obra social: %d\n", totalObraSocial);
     printf("Cantidad de pacientes hospitalizados: %d\n", cantPacSinAlta);
@@ -256,18 +256,21 @@ int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar
     if(mostrar){
         archPacientes = fopen(PATH_ArchPacientes, "rb");
         if (archPacientes == NULL) {
-        printf("\n[ERROR] -> Error al abrir el archivo\n");
-        printf("\nCreando archivo... Volviendo al menu principal\n\n");
-        archPacientes = fopen(PATH_ArchPacientes, "wb"); //Esto deberia crear el archivo med
-        Sleep(1000);
-        if(archPacientes != NULL){ printf("\n\nArchivo creado con exitos, nombre archivo: %s\n\n", PATH_ArchPacientes); }
-        Sleep(3000);
+            printf("\n[ERROR] -> Error al abrir el archivo\n");
+            printf("\nCreando archivo... Volviendo al menu principal\n\n");
+            archPacientes = fopen(PATH_ArchPacientes, "wb");
+            Sleep(1000);
+            if(archPacientes != NULL){
+                printf("\n\nArchivo creado con exito, nombre archivo: %s\n\n", PATH_ArchPacientes);
+            }
+            Sleep(3000);
+            return 0;
         } else {
-        printf("\nArchivo de pacientes abierto en modo lectura. (Para cargar en ARRAY)\n");
+            printf("\nArchivo de pacientes abierto en modo lectura. (Para cargar en ARRAY)\n");
         }
 
         while (i < maxPacientes &&
-           fread(&arrayPaci[i], sizeof(tPaciente), 1, archPacientes) == 1) {
+               fread(&arrayPaci[i], sizeof(tPaciente), 1, archPacientes) == 1) {
             i++;
         }
         printf("\nTotal de pacientes agregados al array: %d\n", i);
@@ -276,16 +279,25 @@ int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar
         Sleep(1500);
         
     } else {
-        archMed = fopen(PATH_ArchPacientes, "rb");
+        // *** MODO SILENCIOSO, SIN PRINTS, PARA USO INTERNO ***
+        archPacientes = fopen(PATH_ArchPacientes, "rb");
+        if (archPacientes == NULL){
+            return 0;
+        }
+
         while (i < maxPacientes &&
-           fread(&arrayPaci[i], sizeof(tPaciente), 1, archPacientes) == 1) {
+               fread(&arrayPaci[i], sizeof(tPaciente), 1, archPacientes) == 1) {
             i++;
         }
+
         fclose(archPacientes);
     }
-    
+
+    // actualizamos contador global del total de registros
+    cantidadDePacientesTotalGral = i;
     return i;
 }
+
 
 void mostrarCantidadPacientes(tPaciente array[], int cantidad){
     int i;
@@ -293,19 +305,23 @@ void mostrarCantidadPacientes(tPaciente array[], int cantidad){
         printf("\nNo hay pacientes cargados.\n");
         Sleep(1500);
         menu();
+        return; // importante para NO seguir ejecutando
     }
-
     printf("\n===== LISTA DE PACIENTES =====\n");
     for (i = 0; i < cantidad; i++) {
-        printf("%2d) DNI: %d  |  Nombre: %s\n",
+        printf("%2d) DNI: %d  |  Nombre: %s  |  Estado: %s\n",
                i + 1,
                array[i].DNI,
-               array[i].nombrePaciente);
+               array[i].nombrePaciente,
+               array[i].razonDelAlta);  // <- antes usabas array[1]
     }
     printf("============================\n");
     int scan;
     printf("\n\n\t\tPrecione 1 luego Enter para volver a seleccionar una opcion\t");
-    scanf("%d", &scan); if(scan == 1) {menu();}
+    scanf("%d", &scan);
+    if (scan == 1) {
+        menu();
+    }
 }
 
 #endif
