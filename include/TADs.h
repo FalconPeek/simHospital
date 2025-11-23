@@ -10,6 +10,7 @@
 // Includes de Funciones
 #include "binarioMedicos.h"
 #include "binarioPacientes.h"
+#include "colaUrgencia.h"
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //Include Menu principal
 #include "menu.h"

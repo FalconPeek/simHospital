@@ -74,4 +74,28 @@ void clearScreen(void){
    //printf("\nClear screen\n");
 }
 
+//Variables MEDICOS
+FILE *archMed;
+#define MAXMEDICOS 100
+tMedico arrayDeMedicos[MAXMEDICOS];
+int cantidadDeMedicos;
+
+//Variables PACIENTES
+
+typedef struct nodo{
+    tPaciente paciente;
+    struct nodo* siguientePaciente;
+}tNodoPaciente;
+
+typedef struct{
+    tNodoPaciente* principio;
+    tNodoPaciente* final;
+}tColaPacientes;
+
+FILE * archPacientes;
+#define MAXPACIENTES 100
+tPaciente arrayPacientes[MAXPACIENTES];
+int cantidadDePacientesTotalGral;
+tColaPacientes colaPacientes;
+
 #endif

@@ -5,11 +5,7 @@
 
 #define PATH_ArchMed "medicos.dat"
 
-//Variables
-FILE *archMed;
-#define MAXMEDICOS 100
-tMedico arrayDeMedicos[MAXMEDICOS];
-int cantidadDeMedicos;
+
 
 //Prototipos de funciones que hacen corto no se porque...
 void menu();

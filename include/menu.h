@@ -7,12 +7,11 @@ void switchMenu(){
     switch (opcion){
         case 1:
             grabarPaciente();
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
             menu();
         break;
         case 2:
-            printf("Todavia no se programo esta opcion...");
-            Sleep(2000);
-            menu();
+            visualizarCola(colaPacientes);
         break;
         case 3:
             mostrarCantidadPacientes(arrayPacientes, cantidadDePacientesTotalGral);
@@ -34,7 +33,7 @@ void switchMenu(){
 //Animacion de carga del programa
 void cargarAssets(){
     int seg;
-    for(seg=0; seg < 7; seg++){ /*For que se usa pasa simular la carga del programa*/
+    for(seg=0; seg < 8; seg++){ /*For que se usa pasa simular la carga del programa*/
         switch (seg)
         {
         case 0:
@@ -70,11 +69,37 @@ void cargarAssets(){
             Sleep(1500);    
         break;
         case 6:
+            iniciarCola(&colaPacientes);
+            Sleep(1000);
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
+            Sleep(500);
+            if(cantidadDePacientesTotalGral == cantidadPacientesEnCola(colaPacientes)) printf("\nTotalidad de pacientes agregados correctamente\n");
+        break;
+        case 7:
             printf("\nPrograma ya cargado y compilado... Iniciando...\n\n");
             Sleep(1000);    
         break;
         }
     }
+    /* SI QUERES VER LOS COLORES ACTIVA ESTA PARTE DEL CODIGO
+    printf("\nProbando colores...");
+    cprintf(COL_RED, "\nRojo");
+    cprintf(COL_GREEN, "\nVerde");
+    cprintf(COL_YELLOW, "\nAmarillo");
+    cprintf(COL_BLUE, "\nAzul");
+    cprintf(COL_MAGENTA, "\nMagenta");
+    cprintf(COL_CYAN, "\nCyan");
+    cprintf(COL_WHITE, "\nBlanco\n");
+    cprintf(COL_BRIGHT_RED, "\nRojo Brillante");
+    cprintf(COL_BRIGHT_GREEN, "\nVerde Brillante");
+    cprintf(COL_BRIGHT_BLUE, "\nAzul Brillante");
+    cprintf(COL_BRIGHT_MAGENTA, "\nMagenta Brillante");
+    cprintf(COL_BRIGHT_CYAN, "\nCyan Brillante");
+    cprintf(COL_BRIGHT_WHITE, "\nBlanco Brillante");
+    int scan;
+    cprintf(COL_BRIGHT_BLUE, "\n\n\t\tPrecione 1 luego Enter para volver al menu...\t");
+    scanf("%d", &scan); if(scan == 1) {menu();}
+    */
 }
 
 void menu(){

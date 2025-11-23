@@ -5,11 +5,7 @@
 #define PATH_ArchPacientes "pacientes.dat"
 
 
-//Variables Globales
-FILE * archPacientes;
-#define MAXPACIENTES 100
-tPaciente arrayPacientes[MAXPACIENTES];
-int cantidadDePacientesTotalGral;
+
 
 //////////////////////////////////////////////////////////////////////////
 //Grabar archivos pacientes
@@ -97,7 +93,7 @@ void grabarArchivoPaciente(){
 
 void finalizarGrabadoPaciente(){
     fclose(archPacientes);
-    printf("\n\nYa se cerro el archivo... \n\nvolviendo al menu principal...");
+    printf("\n\nYa se cerro el archivo... \n\nvolviendo al menu principal... (ESPERANDO 10 SEGUNDOS)");
     Sleep(10000);
 }
 
@@ -151,7 +147,7 @@ void iniciarCortePacientes(){
     cantPacParticular = 0;
     totalObraSocial = 0;
     printf("\t\t\t*** REPORTE DE PACIENTES ***\n");
-    printf("\nNombre y Apellido\tEstado Actual\tUrgencia\tContacto De Emergencia\tDNI\tObra Social\n");
+    printf("\nNombre y Apellido\tEstado Actual\t\tUrgencia\tContacto De Emergencia\tDNI\tObra Social\n");
 }
 void procesoCortePacientes(){
     while(!feof(archPacientes)){
