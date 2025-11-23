@@ -19,18 +19,23 @@ void ordenarPacientesPorUrgencia(tPaciente v[], int n){
 }
 
 
-void iniciarCola(tColaPacientes* colaPacientes){
-    colaPacientes->principio = NULL;
+void iniciarCola(tColaPacientes* colaPacientes, bool mostrar){
+    if(mostrar){
+        colaPacientes->principio = NULL;
     colaPacientes->final = NULL;
     cprintf(COL_GREEN, "\n[SUCCESS] -> Cola de Pacientes Iniciada...\n");
-    Sleep(1000);
+    Sleep(1000);    
+    } else {
+        colaPacientes->principio = NULL;
+        colaPacientes->final = NULL;
+    }
 }
 
 bool colaVacia(tColaPacientes colaPacientes){
     return (colaPacientes.principio == NULL && colaPacientes.final == NULL);
 }
 
-void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes){
+void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes, bool mostrar){
     int i;
 
     // Ordenamos el array por urgencia (1 mas urgente, 5 menos)
@@ -50,7 +55,7 @@ void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cant
             } 
         } else { continue; }
     }
-    cprintf(COL_BLUE, "\nSe agregaron %d pacientes a la cola", i);
+    if(mostrar) {cprintf(COL_BLUE, "\nSe agregaron %d pacientes a la cola", i);}
 } 
 
 int cantidadPacientesEnCola(tColaPacientes colaPacientes){

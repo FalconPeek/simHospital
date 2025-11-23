@@ -10,8 +10,8 @@ void switchMenu(){
             // recargo array desde archivo para incluir el nuevo paciente
             cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, false);
             // si la cola ya está inicializada, podrías rearmarla
-            iniciarCola(&colaPacientes);
-            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
+            iniciarCola(&colaPacientes, false);
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, true);
             menu();
             break;
         case 2:
@@ -35,7 +35,7 @@ void switchMenu(){
 }
 
 //Animacion de carga del programa
-void cargarAssets(){
+void cargarDatosBase(){
     int seg;
     for(seg=0; seg < 8; seg++){ /*For que se usa pasa simular la carga del programa*/
         switch (seg)
@@ -66,16 +66,16 @@ void cargarAssets(){
             clearScreen();
             printf("\nCargando bases de datos...\n");
             cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS, true);
-            Sleep(2000);
+            Sleep(1000);
             break;
         case 5:
             cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, true);
             Sleep(1500);    
         break;
         case 6:
-            iniciarCola(&colaPacientes);
+            iniciarCola(&colaPacientes, true);
             Sleep(1000);
-            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, true);
             Sleep(500);
             if(cantidadDePacientesTotalGral == cantidadPacientesEnCola(colaPacientes)) printf("\nTotalidad de pacientes agregados correctamente\n");
         break;

@@ -15,8 +15,8 @@ void iniciarGrabadoPacientes(){
     archPacientes = fopen(PATH_ArchPacientes, "ab");
 
     if(archPacientes == NULL){
-        printf("Error al abrir pacientes.dat\n");
-        exit(EXIT_FAILURE);
+        cprintf(COL_BRIGHT_RED, "[ERROR] -> No se puede abrir pacientes.dat\n");
+        menu();
     } else {
         printf("Archivo pacientes.dat abierto correctamente en modo append binario");
     }

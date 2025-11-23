@@ -11,8 +11,8 @@
 void menu();
 void switchMenuMedicos();
 int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar);
-void iniciarCola(tColaPacientes* colaPacientes);
-void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes);
+void iniciarCola(tColaPacientes* colaPacientes, bool mostrar);
+void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes, bool mostrar);
 bool colaVacia(tColaPacientes colaPacientes);
 int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[]);
 
@@ -26,11 +26,15 @@ void iniciarGrabadoArchivo(void){
         printf("Archivo abierto en modo append binario\n");
     }
 }
+//FUNCIONANDO CORRECTAMENTE
+
 void finalizarGrabadoArchivo(void){
     fclose(archMed);
     printf("\nFin del grabado del medico\nCerrando archivo...\n");
     Sleep(2000);
 }
+//FUNCIONANDO CORRECTAMENTE
+
 void grabarArchivoMedico(void){
     tMedico inputMedico;
 
@@ -89,7 +93,7 @@ void grabarArchivoMedico(void){
     fwrite(&inputMedico, sizeof(tMedico), 1, archMed);
     printf("\nMedico %s agregado al archivo!\n", inputMedico.nombreApellido);
 }
-
+//FUNCIONANDO CORRECTAMENTE
 
 // Carga todos los medicos del binario en un array y devuelve cuantos cargo
 int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos, bool mostrar){
@@ -208,7 +212,7 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     printf("Opcion: ");
     scanf(" %d", &opcion);
 
-    idx = -1;  //posici�n del m�dico a borrar
+    idx = -1;  //posicion del medico a borrar
 
     if (opcion == 1) {
         printf("\nIngrese el DNI del medico a borrar: ");
@@ -248,7 +252,7 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
            medicos[idx].DNI,
            medicos[idx].nombreApellido);
 
-    printf("�Confirmar borrado? (s/n): ");
+    printf("Confirmar borrado? (s/n): ");
     scanf(" %c", &confirma);
 
     if (confirma != 's' && confirma != 'S') {
@@ -267,6 +271,7 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
 
     printf("Medico borrado y archivo actualizado correctamente.\n");
     printf("\nVolviendo al menu medicos!");
+    Sleep(2000);
     clearScreen();
     return cantidad;
 }
@@ -321,8 +326,8 @@ void switchMenuMedicos(){
                 break;
             }
             // 2) Reconstruir la cola con los pacientes que siguen con NOALTA
-            iniciarCola(&colaPacientes);
-            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral);
+            iniciarCola(&colaPacientes, false);
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, false);
             if (colaVacia(colaPacientes)) {
                 cprintf(COL_RED, "\n\nNo hay pacientes en espera para dar de alta (ninguno con NOALTA).\n");
                 Sleep(2500);
@@ -397,5 +402,5 @@ void menuMedicos(int intentos){
         }
     }
 }
-
+//FUNCIONANDO CORRECTAMENTE
 #endif
