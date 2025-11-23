@@ -120,7 +120,6 @@ void guardarPacientesEnArchivo(tPaciente pPaciente[], int cantidadPacientes){
 }
 
 
-
 int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[]){
     // 1) Sincronizar array con el archivo SIEMPRE
     int cantidadActual = cargarPacientesEnArray(pArrayPacientes, MAXPACIENTES, false);
