@@ -34,7 +34,7 @@ void switchMenu(){
     }
 }
 
-//Animacion de carga del programa
+/* Animacion de carga del programa */
 void cargarDatosBase(){
     int seg;
     for(seg=0; seg < 8; seg++){ /*For que se usa pasa simular la carga del programa*/

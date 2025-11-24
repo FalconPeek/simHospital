@@ -1,18 +1,20 @@
 #ifndef TDA_H
 #define TDA_H
 
-//Include Base
-#include "includesBasicos.h"
-/////////////////////////////////////////////////////////////////////////////////////////////////
-// Includes para el Disenio intefaz
+/* Includes para el Disenio intefaz */
 #include "ui.h"
-/////////////////////////////////////////////////////////////////////////////////////////////////
-// Includes de Funciones
+
+/* Include Base */
+#include "includesBasicos.h"
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
+/* Includes de Funciones */
 #include "binarioMedicos.h"
 #include "binarioPacientes.h"
 #include "colaUrgencia.h"
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//Include Menu principal
+/*------------------------------------------------------------------------------------------------*/
+/* Include Menu principal */
 #include "menu.h"
 
 #endif
