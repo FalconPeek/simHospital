@@ -12,7 +12,8 @@
 typedef char tString[50];
 
 typedef struct {
-    int DNI, matricula, nroEmpleado, nroTelefono;
+    int DNI, matricula, nroEmpleado;
+    double nroTelefono;
     char fechaNacimiento[9]; /* (AAAAMMDD) 8 caracteres + "\0" */
 	char sexo; 
     tString domicilio, e_mail, nombreApellido;
