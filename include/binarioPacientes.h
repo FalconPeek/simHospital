@@ -85,7 +85,7 @@ void grabarArchivoPaciente(){
     
     Pasamos directamente a grabar el archivo binario*/
 
-    strcpy(inputPaciente.razonDelAlta, "NOALTA"); /*Inicializamos con la Flag NOALTA para saber que a este paciente aun no se le dio el alta*/
+    strcpy(inputPaciente.razonDelAlta, "SIN ALTA"); /*Inicializamos con la Flag NO ALTA para saber que a este paciente aun no se le dio el alta*/
 
     fwrite(&inputPaciente, sizeof(tPaciente), 1, archPacientes);
     printf("\n\nPaciente %s agregado al archivo para revision", inputPaciente.nombrePaciente);
@@ -210,7 +210,7 @@ void procesoCortePacientes(){
                     strcpy(Urgencia, "No urgente");
                 break;
             } /*Salimos del switch*/
-            switch(strcmp(paciente.razonDelAlta, "NOALTA") == 0){
+            switch(strcmp(paciente.razonDelAlta, "SIN ALTA") == 0){
                 case 1:
                     cantPacSinAlta++;
                     strcpy(estadoActualDelPaciente, "En espera de alta");

@@ -309,7 +309,7 @@ void switchMenuMedicos(){
             } else {
             /* 
              * 1) Sincronizamos ARRAY de pacientes con el archivo
-             * 2) Reconstruimos la cola solo con pacientes NOALTA
+             * 2) Reconstruimos la cola solo con pacientes SIN ALTA
              * 3) Atendemos al primero y damos de alta
              * 4) Mostramos cuantos quedan sin alta
              */
@@ -325,7 +325,7 @@ void switchMenuMedicos(){
             iniciarCola(&colaPacientes, false);
             agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, false);
             if (colaVacia(colaPacientes)) {
-                cprintf(COL_RED, "\n\nNo hay pacientes en espera para dar de alta (ninguno con NOALTA).\n");
+                cprintf(COL_RED, "\n\nNo hay pacientes en espera para dar de alta (ninguno [SIN ALTA]).\n");
                 Sleep(2500);
                 switchMenuMedicos();
                 break;

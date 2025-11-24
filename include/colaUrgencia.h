@@ -43,7 +43,7 @@ void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cant
     ordenarPacientesPorUrgencia(arrayP, cantidadPacientes);
 
     for(i=0;i < cantidadPacientes; i++){
-        if(strcmp(arrayP[i].razonDelAlta, "NOALTA") == 0){
+        if(strcmp(arrayP[i].razonDelAlta, "SIN ALTA") == 0){
             tNodoPaciente* nuevoPaciente = (tNodoPaciente*) malloc(sizeof(tNodoPaciente));
             nuevoPaciente->paciente = arrayP[i];
             nuevoPaciente->siguientePaciente = NULL;
@@ -138,7 +138,7 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
         int sinAlta = 0;
         int i;
         for (i = 0; i < cantidadActual; i++){
-            if (strcmp(pArrayPacientes[i].razonDelAlta, "NOALTA") == 0){
+            if (strcmp(pArrayPacientes[i].razonDelAlta, "SIN ALTA") == 0){
                 sinAlta++;
             }
         }
@@ -231,7 +231,7 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
     /* 9) Recalcular cuantos siguen sin alta*/
     int sinAlta = 0;
     for (i = 0; i < cantidadActual; i++){
-        if (strcmp(pArrayPacientes[i].razonDelAlta, "NOALTA") == 0){
+        if (strcmp(pArrayPacientes[i].razonDelAlta, "SIN ALTA") == 0){
             sinAlta++;
         }
     }
