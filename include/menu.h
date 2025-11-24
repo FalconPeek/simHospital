@@ -11,7 +11,7 @@ void switchMenu(){
             cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, false);
             // si la cola ya está inicializada, podrías rearmarla
             iniciarCola(&colaPacientes, false);
-            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, true);
+            agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, false);
             menu();
             break;
         case 2:
