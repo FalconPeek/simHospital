@@ -2,8 +2,9 @@
 #define COLAURGENCIA_H
 
 #include "includesBasicos.h"
-#include "ui.h"
+#include "colores.h"
 
+/*Funcion para ordenar un array por urgencia*/
 void ordenarPacientesPorUrgencia(tPaciente v[], int n){
     int i, j;
     tPaciente aux;
@@ -19,7 +20,7 @@ void ordenarPacientesPorUrgencia(tPaciente v[], int n){
     }
 }
 
-
+/*Funcion que inicia la cola*/
 void iniciarCola(tColaPacientes* colaPacientes, bool mostrar){
     if(mostrar){
         colaPacientes->principio = NULL;
@@ -32,10 +33,12 @@ void iniciarCola(tColaPacientes* colaPacientes, bool mostrar){
     }
 }
 
+/*Funcion para verificar si hay pacientes en la cola*/
 bool colaVacia(tColaPacientes colaPacientes){
     return (colaPacientes.principio == NULL && colaPacientes.final == NULL);
 }
 
+/*Funcion que agrega pacientes en la cola desde el array creado*/
 void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes, bool mostrar){
     int i;
 
@@ -59,6 +62,7 @@ void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cant
     if(mostrar) {cprintf(COL_BLUE, "\nSe agregaron %d pacientes a la cola", i);}
 } 
 
+/*Funcion que devuelve la cantidad de pacientes en la cola*/
 int cantidadPacientesEnCola(tColaPacientes colaPacientes){
     int cantidad = 0;
 
@@ -75,30 +79,50 @@ int cantidadPacientesEnCola(tColaPacientes colaPacientes){
     return cantidad;
 }
 
+/*Funcion que se usa para visualizar la cola en orden de urgencia*/
 void visualizarCola(tColaPacientes pPacientes){
-    cprintf(COL_BRIGHT_MAGENTA, "\n-----------------------------------------\n");
-    cprintf(COL_BRIGHT_MAGENTA, "\t*** Pacientes en espera ***");
-    cprintf(COL_BRIGHT_MAGENTA, "\n-----------------------------------------\n");
+    cprintf(COL_BRIGHT_WHITE, "\n-----------------------------------------\n");
+    cprintf(COL_BRIGHT_WHITE, "\t*** Pacientes en espera ***");
+    cprintf(COL_BRIGHT_WHITE, "\n-----------------------------------------\n");
 
     if(colaVacia(pPacientes)){
-        cprintf(COL_BRIGHT_RED, "\n\t[ERROR] -> ");
+        cprintf(COL_BRIGHT_MAGENTA, "\n\t[WARNING] -> ");
         cprintf(COL_BRIGHT_WHITE, "La cola esta vacia...\n");
         Sleep(2000);
         menu();
     } else {
         tNodoPaciente* listaPacientes = pPacientes.principio;
-        cprintf(COL_BRIGHT_CYAN, "Nombre Completo\tDNI\t\tCodigo Urgencia\n");
+        tString NOMBRE, DNI, CODIGO;
+        strcpy(NOMBRE, "Nombre Completo");
+        strcpy(DNI, "Documento");
+        strcpy(CODIGO, "Urgencia");
+
+        cprintf(COL_BRIGHT_WHITE, "%-30s %-10s %s\n", NOMBRE, DNI, CODIGO);
         while (listaPacientes != NULL){
-            printf("%s\t%d\t%d\n", 
+            printf("%-30s\t%-8d\t", 
                 listaPacientes->paciente.nombrePaciente,
-                listaPacientes->paciente.DNI,
-                listaPacientes->paciente.urgencia
+                listaPacientes->paciente.DNI
             );
+            switch(listaPacientes->paciente.urgencia){
+                case 1:
+                    cprintf(COL_RED, "Atencion Inmediata\n");
+                    break;
+                case 2:
+                    cprintf(COL_YELLOW, "Urgencia Alta\n");
+                    break;
+                case 3:
+                    cprintf(COL_MAGENTA, "Atencion Media\n");
+                    break;
+                case 4:
+                    cprintf(COL_CYAN, "Atencion Baja\n");
+                    break;
+                case 5:
+                    cprintf(COL_GREEN, "No urgente\n");
+                    break;
+                }
             listaPacientes = listaPacientes->siguientePaciente;
         }
-        int scan;
-        cprintf(COL_BRIGHT_BLUE, "\n\n\t\tPrecione 1 luego Enter para volver al menu...\t");
-        scanf("%d", &scan); if(scan == 1) {menu();}
+        esperarEnter(1);
     }
 }
 
@@ -106,14 +130,14 @@ void visualizarCola(tColaPacientes pPacientes){
 void guardarPacientesEnArchivo(tPaciente pPaciente[], int cantidadPacientes){
     FILE * arch = fopen(PATH_ArchPacientes, "wb");
     if (arch == NULL){
-        cprintf(COL_BRIGHT_RED, "\n[ERROR] -> No se pudo abrir pacientes.dat para escritura.\n");
+        cprintf(COL_BRIGHT_RED, "\n[ERROR] -> "); printf("No se pudo abrir pacientes.dat para escritura.\n");
         return;
     }
 
     if(cantidadPacientes > 0) {
         size_t escritos = fwrite(pPaciente, sizeof(tPaciente), cantidadPacientes, arch);
         if(escritos != (size_t)cantidadPacientes){
-            cprintf(COL_BRIGHT_RED, "\n[ERROR] -> Ocurrio un error al guardar el array pacientes en el Archivo...\n");
+            cprintf(COL_BRIGHT_RED, "\n[ERROR] -> "); printf("Ocurrio un error al guardar el array pacientes en el Archivo...\n");
         }
     }
 
@@ -126,14 +150,14 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
     int cantidadActual = cargarPacientesEnArray(pArrayPacientes, MAXPACIENTES, false);
 
     if(cantidadActual == 0){
-        cprintf(COL_BRIGHT_MAGENTA, "\nNo hay pacientes cargados en el archivo.\n");
+        cprintf(COL_BRIGHT_MAGENTA, "[WARNING] -> "); printf("No hay pacientes cargados en el archivo.\n");
         cantidadPacientesSinAlta = 0;
         return 0;
     }
 
     /* 2) Si la cola está vacía, solo devolvemos cuántos siguen sin alta*/
     if(colaVacia(*pPacientes)){
-        cprintf(COL_RED, "\n[WARNING] -> No hay pacientes en la cola para dar de alta.\n");
+        cprintf(COL_BRIGHT_MAGENTA, "\n[WARNING] -> "); printf("No hay pacientes en la cola para dar de alta.\n");
 
         int sinAlta = 0;
         int i;

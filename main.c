@@ -8,6 +8,9 @@ int main(void) {
     cargarDatosBase(); /*Animacion de carga mas carga/creacion de archivos*/
 
     menu(); /*Menu principal*/
-    return 0;
+    
+    /*No coloco el return 0;
+    Porque el programa esta funcionando con exit(EXIT_SUCCESS)
+    que cuando se elige sale del programa*/
 }
 

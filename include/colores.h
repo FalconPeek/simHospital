@@ -15,7 +15,7 @@ typedef enum {
     COL_BRIGHT_YELLOW,
     COL_BRIGHT_BLUE,
     COL_BRIGHT_MAGENTA,
-    COL_BRIGHT_CYAN,
+    COL_BRIGHT_WHITE,
     COL_BRIGHT_WHITE
 } tColor;
 
@@ -45,7 +45,7 @@ static const char *color_to_ansi(tColor c) {
         case COL_BRIGHT_YELLOW:  return "\033[93m";
         case COL_BRIGHT_BLUE:    return "\033[94m";
         case COL_BRIGHT_MAGENTA: return "\033[95m";
-        case COL_BRIGHT_CYAN:    return "\033[96m";
+        case COL_BRIGHT_WHITE:    return "\033[96m";
         case COL_BRIGHT_WHITE:   return "\033[97m";
 
         case COL_RESET:

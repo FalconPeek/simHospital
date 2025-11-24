@@ -11,6 +11,7 @@
 Grabar archivos pacientes
 ------------------------------------------------------------------------------------------------*/
 
+/*Funcion que inicia el archivo para el grabado*/
 void iniciarGrabadoPacientes(){
     archPacientes = fopen(PATH_ArchPacientes, "ab");
 
@@ -18,17 +19,18 @@ void iniciarGrabadoPacientes(){
         cprintf(COL_BRIGHT_RED, "[ERROR] -> No se puede abrir pacientes.dat\n");
         menu();
     } else {
-        printf("Archivo pacientes.dat abierto correctamente en modo append binario");
+        cprintf(COL_GREEN, "[EXITO] -> Archivo %s listo para grabar pacientes", PATH_ArchPacientes);
     }
 }
 
+/*Funcion que graba el archivo de pacientes*/
 void grabarArchivoPaciente(){
     tPaciente inputPaciente;
 
     clearScreen();
     
-    puts("Usted ingreso a la opcion para Aniadir un paciente!");
-    puts("A continuacion... Ingrese los datos de este:");
+    cprintf(COL_BRIGHT_WHITE, "Usted ingreso a la opcion para Aniadir un paciente!\n");
+    cprintf(COL_MAGENTA, "A continuacion... Ingrese los datos de este:\n");
     
     printf("\nNombre del paciente: ");
     scanf(" %49[^\n]", inputPaciente.nombrePaciente);
@@ -40,26 +42,26 @@ void grabarArchivoPaciente(){
     scanf(" %49[^\n]", inputPaciente.alergias);
 
     printf("\nTipo de sangre del paciente: ");
-    printf("\n[0] -> A+");
-    printf("\n[1] -> A-");
-    printf("\n[2] -> B+");
-    printf("\n[3] -> B-");
-    printf("\n[4] -> AB+");
-    printf("\n[5] -> AB-");
-    printf("\n[6] -> O+");
-    printf("\n[7] -> O-\n");
-    printf("\nElegir tipo de sangre: ");
+    cprintf(COL_BLUE, "\n[0] "); printf("-> A+");
+    cprintf(COL_BLUE, "\n[1] "); printf("-> A-");
+    cprintf(COL_BLUE, "\n[2] "); printf("-> B+");
+    cprintf(COL_BLUE, "\n[3] "); printf("-> B-");
+    cprintf(COL_BLUE, "\n[4] "); printf("-> AB+");
+    cprintf(COL_BLUE, "\n[5] "); printf("-> AB-");
+    cprintf(COL_BLUE, "\n[6] "); printf("-> O+");
+    cprintf(COL_BLUE, "\n[7] "); printf("-> O-\n");
+    cprintf(COL_RED, "\nElegir tipo de sangre: ");
     scanf("%d", &inputPaciente.tipoDeSangre);
 
-    printf("\nObra social del paciente: (OPCIONES)");
-    printf("\n[0] -> Sancor Salud");
-    printf("\n[1] -> IOFA");
-    printf("\n[2] -> OSDE");
-    printf("\n[3] -> IOSCOR");
-    printf("\n[4] -> PAMI");
-    printf("\n[5] -> OSECAC");
-    printf("\n[6] -> Swiss Medical");
-    printf("\n[7] -> Particular\n");
+    printf("\nObra social del paciente: ");
+    cprintf(COL_BLUE, "\n[0] "); printf("-> Sancor Salud");
+    cprintf(COL_BLUE, "\n[1] "); printf("-> IOFA");
+    cprintf(COL_BLUE, "\n[2] "); printf("-> OSDE");
+    cprintf(COL_BLUE, "\n[3] "); printf("-> IOSCOR");
+    cprintf(COL_BLUE, "\n[4] "); printf("-> PAMI");
+    cprintf(COL_BLUE, "\n[5] "); printf("-> OSECAC");
+    cprintf(COL_BLUE, "\n[6] "); printf("-> Swiss Medical");
+    cprintf(COL_BLUE, "\n[7] "); printf("-> Particular\n");
     printf("\nElegir obra social: ");
     scanf("%d", &inputPaciente.obraSocial);
 
@@ -70,11 +72,11 @@ void grabarArchivoPaciente(){
     scanf("%d", &inputPaciente.DNI);
 
     printf("\nUrgencia de atencion: (OPCIONES)");
-    printf("\n[1] -> Atencion Inmediata");
-    printf("\n[2] -> Urgencia Alta");
-    printf("\n[3] -> Urgencia Media");
-    printf("\n[4] -> Urgencia Baja");
-    printf("\n[5] -> No urgente\n");
+    cprintf(COL_RED, "\n[1] "); printf("-> Atencion Inmediata");
+    cprintf(COL_YELLOW, "\n[2] "); printf("-> Urgencia Alta");
+    cprintf(COL_MAGENTA, "\n[3] "); printf("-> Urgencia Media");
+    cprintf(COL_CYAN, "\n[4] "); printf("-> Urgencia Baja");
+    cprintf(COL_GREEN, "\n[5] "); printf("-> No urgente\n");
     printf("\nOpcion a elegir: ");
     scanf("%d", &inputPaciente.urgencia);
     
@@ -88,32 +90,24 @@ void grabarArchivoPaciente(){
     strcpy(inputPaciente.razonDelAlta, "SIN ALTA"); /*Inicializamos con la Flag NO ALTA para saber que a este paciente aun no se le dio el alta*/
 
     fwrite(&inputPaciente, sizeof(tPaciente), 1, archPacientes);
-    printf("\n\nPaciente %s agregado al archivo para revision", inputPaciente.nombrePaciente);
+    cprintf(COL_GREEN, "\n\nPaciente %s agregado al archivo para revision", inputPaciente.nombrePaciente);
 }
 
+/*Funcion que cierra el archivo una vez grabado*/
 void finalizarGrabadoPaciente(){
     fclose(archPacientes);
-    printf("\n\nYa se cerro el archivo... \n\nvolviendo al menu principal... (ESPERANDO 10 SEGUNDOS)");
+    cprintf(COL_GREEN, "\n\nYa se cerro el archivo... \n\nvolviendo al menu principal... \n\n(ESPERANDO 10 SEGUNDOS)");
     Sleep(10000);
 }
 
+/*Funcion maestra que comanda el grabado de pacientes en el archivo*/
 void grabarPaciente(){
     iniciarGrabadoPacientes();
     grabarArchivoPaciente();
     finalizarGrabadoPaciente();
 }
 
-
-
-/*Variables globales para el corte de control */
-int cantidadTotalDePacientes, cantidadDePacientesAtencionInmediata, cantidaDePacientesUrgenAlta, cantidadDePacientesMedia, cantidadDePacientesBaja, cantidadDePacientesNoUrgente;
-int cantPacSancor, cantPacIOFA, cantPacOSDE, cantPacIOSCOR, cantPacPAMI, cantPacOSECAC, cantPacSwissMedical, cantPacParticular;
-int cantPacSinAlta, cantPacDeAlta;
-tPaciente paciente, pacienteAnt;
-int totalObraSocial;
-
-
-
+/*Funcion que inicia el corte del archivo de pacientes*/
 void iniciarCortePacientes(){
     clearScreen();
     archPacientes = fopen(PATH_ArchPacientes, "rb");
@@ -121,10 +115,14 @@ void iniciarCortePacientes(){
 
 
     if(archPacientes == NULL){
-        printf("\nEl programa fallo al abrir el archivo de los pacientes.dat\nVolviendo al menu principal...");
+        cprintf(COL_BRIGHT_RED, "[ERROR] -> "); printf("\nEl programa fallo al abrir el archivo de los pacientes.dat\nVolviendo al menu principal...");
         menu();
     } else {
-        fread(&paciente, sizeof(tPaciente), 1, archPacientes);
+        if(fread(&paciente, sizeof(tPaciente), 1, archPacientes) == 0){
+            cprintf(COL_BRIGHT_MAGENTA, "[WARNING] ->"); printf("No hay ningun paciente cargado\n"); cprintf(COL_BRIGHT_YELLOW, "VOLVIENDO AL MENU...");
+            Sleep(2500);
+            menu();
+        }
     }
 
     pacienteAnt = paciente;
@@ -146,9 +144,19 @@ void iniciarCortePacientes(){
     cantPacSwissMedical = 0;
     cantPacParticular = 0;
     totalObraSocial = 0;
-    printf("\t\t\t*** REPORTE DE PACIENTES ***\n");
-    printf("\nNombre y Apellido\tEstado Actual\t\tUrgencia\t\tContacto De Emergencia\tDNI\tObra Social\n");
+    cprintf(COL_BRIGHT_WHITE, "\t\t\t\t\t*** REPORTE DE PACIENTES ***\n");
+    tString nombre, estadoAc, urgencia, nroEmer, dni, social;
+    strcpy(nombre, "Nombre Completo");
+    strcpy(estadoAc, "Estado Actual");
+    strcpy(urgencia, "Urgencia");
+    strcpy(nroEmer, "Contacto De Emergencia");
+    strcpy(dni, "Documento");
+    strcpy(social, "Obra Social");
+    printf("\n%-30s %-15s %-15s %-30s %-10s %-15s\n", nombre, estadoAc, urgencia, nroEmer, dni, social);
+    printf("------------------------------ --------------- --------------- ------------------------------ ---------- ---------------\n");
 }
+
+/*Funcion que realiza el corte del archivo de pacientes*/
 void procesoCortePacientes(){
     while(!feof(archPacientes)){
         tString estadoActualDelPaciente, ObraSocial, Urgencia;
@@ -220,15 +228,16 @@ void procesoCortePacientes(){
                     strcpy(estadoActualDelPaciente, "Dado de Alta");
                 break;
             }
-            printf("%s\t\t%s\t%s\t%d\t%d\t%s\n", paciente.nombrePaciente, estadoActualDelPaciente, Urgencia, paciente.contactoEmergencia, paciente.DNI, ObraSocial);
+            printf("%-30s %-15s %-15s %-30d %-10d %-15s\n", paciente.nombrePaciente, estadoActualDelPaciente, Urgencia, paciente.contactoEmergencia, paciente.DNI, ObraSocial);
             fread(&paciente, sizeof(tPaciente), 1, archPacientes);
         }
         pacienteAnt = paciente;
     }
 }
 
+/*Funcion que muestra totales luego del corte del archivo de pacientes*/
 void finalizarCortePacientes(){
-    printf("\n-------------------------------------------------------------------------------------------\n");
+    printf("\n--------------------------------------------------------------------------------------------------------------\n");
     printf("Total de pacientes: %d\n", cantidadTotalDePacientes);
     printf("Cantidad de pacientes particulares: %d\n", cantPacParticular);
     totalObraSocial += cantPacSancor + cantPacIOFA + cantPacOSDE + cantPacIOSCOR + cantPacPAMI + cantPacOSECAC + cantPacSwissMedical;
@@ -238,35 +247,33 @@ void finalizarCortePacientes(){
     printf("Cantidad de pacientes hospitalizados: %d\n", cantPacSinAlta);
     printf("Cantidad de pacientes dados de Alta: %d\n", cantPacDeAlta);
     fclose(archPacientes);
-    int scan;
-    printf("\n\n\t\tPrecione 1 luego Enter para volver al menu...\t");
-    scanf("%d", &scan); if(scan == 1) {menu();}
+    esperarEnter(1);
 }
 
+/*Funcion maestra que comanda el corte del archivo de pacientes*/
 void reporteDePacietes(){
     iniciarCortePacientes();
     procesoCortePacientes();
     finalizarCortePacientes();
 }
 
-
-
+/*Funcion que carga los pacientes en un array*/
 int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar){
     int i = 0;
     if(mostrar){
         archPacientes = fopen(PATH_ArchPacientes, "rb");
         if (archPacientes == NULL) {
-            printf("\n[ERROR] -> Error al abrir el archivo\n");
+            cprintf(COL_BRIGHT_RED, "[ERROR] -> "); printf("Error al abrir el archivo\n");
             printf("\nCreando archivo... Volviendo al menu principal\n\n");
             archPacientes = fopen(PATH_ArchPacientes, "wb");
             Sleep(1000);
             if(archPacientes != NULL){
-                printf("\n\nArchivo creado con exito, nombre archivo: %s\n\n", PATH_ArchPacientes);
+                cprintf(COL_GREEN, "\n\nArchivo creado con exito, nombre archivo: %s\n\n", PATH_ArchPacientes);
             }
             Sleep(3000);
             return 0;
         } else {
-            printf("\nArchivo de pacientes abierto en modo lectura. (Para cargar en ARRAY)\n");
+            cprintf(COL_BRIGHT_GREEN, "[EXITO] -> ");printf("\nArchivo de pacientes abierto en modo lectura.\n");
         }
 
         while (i < maxPacientes &&
@@ -298,30 +305,25 @@ int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar
     return i;
 }
 
-
+/*Funcion que muestra los pacientes del array*/
 void mostrarCantidadPacientes(tPaciente array[], int cantidad){
     int i;
     if (cantidad == 0) {
-        printf("\nNo hay pacientes cargados.\n");
+        cprintf(COL_BRIGHT_MAGENTA, "[WARNING] -> "); printf("\nNo hay pacientes cargados.\n");
         Sleep(1500);
         menu();
         return; /* importante para NO seguir ejecutando */
     }
-    printf("\n===== LISTA DE PACIENTES =====\n");
+    cprintf(COL_BRIGHT_WHITE, "\n=============== LISTA DE PACIENTES ===============\n");
     for (i = 0; i < cantidad; i++) {
-        printf("%2d) DNI: %d  |  Nombre: %s  |  Estado: %s\n",
+        printf("%2d) DNI: %-9d  |  Nombre: %-30s  |  Estado: %-20s\n",
                i + 1,
                array[i].DNI,
                array[i].nombrePaciente,
                array[i].razonDelAlta);  /* <- antes usabas array[1] */
     }
-    printf("============================\n");
-    int scan;
-    printf("\n\n\t\tPrecione 1 luego Enter para volver a seleccionar una opcion\t");
-    scanf("%d", &scan);
-    if (scan == 1) {
-        menu();
-    }
+    cprintf(COL_BRIGHT_WHITE, "========================================================================================================\n");
+    esperarEnter(1);
 }
 
 #endif

@@ -67,12 +67,37 @@ typedef struct {
 
 void head(){printf("%s\n", CABEZA_PROGRAMA);}
 
-void clearScreen(void){
+
+/*Funcion que sirve para borrar el cmd*/
+void clearScreen(){
 
     char *t = getenv("TERM");
     system((t && strcmp(t, "dumb")) ? "clear" : "cls");
 
    /*printf("\nClear screen\n");*/
+}
+
+/*Funcion que sirve para esperar enter y asi volver al menu correspondiente*/
+void esperarEnter(int destino) {
+    char buffer[32];
+
+    printf("\n\nPresione ENTER para volver al menú... ");
+    /* Da igual si escribe "5" o cualquier cosa, se descarta igual */
+    if (!fgets(buffer, sizeof buffer, stdin)) {
+        return;     // por si hay EOF/errores
+    }
+
+    switch (destino) {
+        case 1:
+            menu();               // menú principal
+            break;
+        case 2:
+            switchMenuMedicos();  // menú médicos
+            break;
+        default:
+            menu();               // por defecto, menú principal
+            break;
+    }
 }
 
 /* Variables MEDICOS */
@@ -84,6 +109,14 @@ tMedico arrayDeMedicos[MAXMEDICOS];
 int cantidadDeMedicos;
 
 /*Variables PACIENTES */
+
+/*Variables globales para el corte de control */
+int cantidadTotalDePacientes, cantidadDePacientesAtencionInmediata, cantidaDePacientesUrgenAlta, cantidadDePacientesMedia, cantidadDePacientesBaja, cantidadDePacientesNoUrgente;
+int cantPacSancor, cantPacIOFA, cantPacOSDE, cantPacIOSCOR, cantPacPAMI, cantPacOSECAC, cantPacSwissMedical, cantPacParticular;
+int cantPacSinAlta, cantPacDeAlta;
+tPaciente paciente, pacienteAnt;
+int totalObraSocial;
+
 #define PATH_ArchPacientes "pacientes.dat"
 
 typedef struct nodo{
