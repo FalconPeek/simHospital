@@ -2,12 +2,9 @@
 #define BINARIOMEDICOS_H
 
 #include "includesBasicos.h"
-
 #define PATH_ArchMed "medicos.dat"
 
-
-
-//Prototipos de funciones que hacen corto no se porque...
+/*Prototipos de funciones que hacen corto no se porque...*/
 void menu();
 void switchMenuMedicos();
 int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar);
@@ -16,7 +13,7 @@ void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cant
 bool colaVacia(tColaPacientes colaPacientes);
 int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[]);
 
-// Abrir archivo en modo append binario
+
 void iniciarGrabadoArchivo(void){
     archMed = fopen(PATH_ArchMed, "ab");
     if (archMed == NULL) {
@@ -26,14 +23,14 @@ void iniciarGrabadoArchivo(void){
         printf("Archivo abierto en modo append binario\n");
     }
 }
-//FUNCIONANDO CORRECTAMENTE
+
 
 void finalizarGrabadoArchivo(void){
     fclose(archMed);
     printf("\nFin del grabado del medico\nCerrando archivo...\n");
     Sleep(2000);
 }
-//FUNCIONANDO CORRECTAMENTE
+
 
 void grabarArchivoMedico(void){
     tMedico inputMedico;
@@ -93,9 +90,9 @@ void grabarArchivoMedico(void){
     fwrite(&inputMedico, sizeof(tMedico), 1, archMed);
     printf("\nMedico %s agregado al archivo!\n", inputMedico.nombreApellido);
 }
-//FUNCIONANDO CORRECTAMENTE
 
-// Carga todos los medicos del binario en un array y devuelve cuantos cargo
+
+/* Carga todos los medicos del binario en un array y devuelve cuantos cargo*/
 int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos, bool mostrar){
     int i = 0;
     if(mostrar){
@@ -131,10 +128,10 @@ int cargarMedicosEnArray(tMedico arrayMed[], int maxMedicos, bool mostrar){
     
     return i;
 }
-// TERMINADA Y FUNCIONANDO
 
 
-// Guarda TODO el array en el archivo binario (sobrescribe)
+
+/* Guarda TODO el array en el archivo binario (sobrescribe) */
 void guardarMedicosEnArchivo(tMedico medicos[], int cantidad) {
     FILE *f = fopen(PATH_ArchMed, "wb");
     if (f == NULL) {
@@ -152,7 +149,7 @@ void guardarMedicosEnArchivo(tMedico medicos[], int cantidad) {
 
     fclose(f);
 }
-// TERMINADA Y FUNCIONANDO
+
 
 
 void mostrarCantidadMedicos(tMedico medicos[], int cantidad){
@@ -175,11 +172,10 @@ void mostrarCantidadMedicos(tMedico medicos[], int cantidad){
     printf("\n\n\t\tPrecione 1 luego Enter para volver a seleccionar una opcion\t");
     scanf("%d", &scan); if(scan == 1) {switchMenuMedicos();}
 }
-// TERMINADA Y FUNCIONANDO
 
 
-// Muestra lista y permite borrar por DNI o nombre.
-// Devuelve la NUEVA cantidad de medicos.
+/* Muestra lista y permite borrar por DNI o nombre. */
+/* Devuelve la NUEVA cantidad de medicos. */
 int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     clearScreen();
     int opcion;
@@ -275,7 +271,7 @@ int mostrarYBorrarMedico(tMedico medicos[], int cantidad) {
     clearScreen();
     return cantidad;
 }
-// TERMINADA Y FUNCIONANDO
+
 
 
 void grabarMedico(void){
@@ -284,16 +280,16 @@ void grabarMedico(void){
     finalizarGrabadoArchivo();
     cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS, false);
 }
-// TERMINADA Y FUNCIONANDO
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*------------------------------------------------------------------------------------------------*/
 int cantidadActualMedicos; //Se usa en linea 286
 
 void switchMenuMedicos(){
     clearScreen();
         /*Escribimos las opciones en pantalla y luego el switch*/
         cprintf(COL_BRIGHT_GREEN, "\t\t*** Menu Medicos ***\n\n");
-        //printf("[0] Dar urgencia a pacientes aun no atendidos"); Esto agrega bastante complejidad, vemos si hacemos esta opcion o no una vez terminado todo
+        /* printf("[0] Dar urgencia a pacientes aun no atendidos"); Esto agrega bastante complejidad, vemos si hacemos esta opcion o no una vez terminado todo */
         cprintf(COL_BLUE, "\n[1] "); printf("-> Atender paciente y Dar de alta");
         cprintf(COL_BLUE, "\n[2] "); printf("-> Agregar Medico");
         cprintf(COL_BLUE, "\n[3] "); printf("-> Mostrar cantidad de medicos");
@@ -317,7 +313,7 @@ void switchMenuMedicos(){
              * 3) Atendemos al primero y damos de alta
              * 4) Mostramos cuantos quedan sin alta
              */
-            // 1) Cargar pacientes desde el archivo al array global
+            /* 1) Cargar pacientes desde el archivo al array global*/
             cantidadDePacientesTotalGral = cargarPacientesEnArray(arrayPacientes, MAXPACIENTES, false);
             if (cantidadDePacientesTotalGral == 0) {
                 cprintf(COL_BRIGHT_MAGENTA, "\n\nNo hay pacientes cargados en el sistema.\n");
@@ -325,7 +321,7 @@ void switchMenuMedicos(){
                 switchMenuMedicos();
                 break;
             }
-            // 2) Reconstruir la cola con los pacientes que siguen con NOALTA
+            /* 2) Reconstruir la cola con los pacientes que siguen con NOALTA*/
             iniciarCola(&colaPacientes, false);
             agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, false);
             if (colaVacia(colaPacientes)) {
@@ -334,9 +330,9 @@ void switchMenuMedicos(){
                 switchMenuMedicos();
                 break;
             }
-            // 3) Atender y dar de alta al primero de la cola
+            /* 3) Atender y dar de alta al primero de la cola*/
             int restantesSinAlta = diagnosticarDarAlta(&colaPacientes, arrayPacientes);
-            // 4) Feedback operativo
+            /* 4) Feedback operativo */
             if (restantesSinAlta > 0) {
                 cprintf(COL_BRIGHT_GREEN, "\n\nQuedan %d pacientes sin dar de alta.\n", restantesSinAlta);
             } else {
@@ -402,5 +398,4 @@ void menuMedicos(int intentos){
         }
     }
 }
-//FUNCIONANDO CORRECTAMENTE
 #endif

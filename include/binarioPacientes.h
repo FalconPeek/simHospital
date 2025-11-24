@@ -2,14 +2,14 @@
 #define BINARIOPACIENTES_H
 #include "includesBasicos.h"
 
-#define PATH_ArchPacientes "pacientes.dat"
 
 
 
 
-//////////////////////////////////////////////////////////////////////////
-//Grabar archivos pacientes
-//////////////////////////////////////////////////////////////////////////
+
+/*------------------------------------------------------------------------------------------------
+Grabar archivos pacientes
+------------------------------------------------------------------------------------------------*/
 
 void iniciarGrabadoPacientes(){
     archPacientes = fopen(PATH_ArchPacientes, "ab");
@@ -85,7 +85,7 @@ void grabarArchivoPaciente(){
     
     Pasamos directamente a grabar el archivo binario*/
 
-    strcpy(inputPaciente.razonDelAlta, "NOALTA"); //Inicializamos con la Flag NOALTA para saber que a este paciente aun no se le dio el alta
+    strcpy(inputPaciente.razonDelAlta, "NOALTA"); /*Inicializamos con la Flag NOALTA para saber que a este paciente aun no se le dio el alta*/
 
     fwrite(&inputPaciente, sizeof(tPaciente), 1, archPacientes);
     printf("\n\nPaciente %s agregado al archivo para revision", inputPaciente.nombrePaciente);
@@ -105,7 +105,7 @@ void grabarPaciente(){
 
 
 
-//Variables globales para el corte de control
+/*Variables globales para el corte de control */
 int cantidadTotalDePacientes, cantidadDePacientesAtencionInmediata, cantidaDePacientesUrgenAlta, cantidadDePacientesMedia, cantidadDePacientesBaja, cantidadDePacientesNoUrgente;
 int cantPacSancor, cantPacIOFA, cantPacOSDE, cantPacIOSCOR, cantPacPAMI, cantPacOSECAC, cantPacSwissMedical, cantPacParticular;
 int cantPacSinAlta, cantPacDeAlta;
@@ -279,7 +279,7 @@ int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar
         Sleep(1500);
         
     } else {
-        // *** MODO SILENCIOSO, SIN PRINTS, PARA USO INTERNO ***
+        /* *** MODO SILENCIOSO, SIN PRINTS, PARA USO INTERNO *** */
         archPacientes = fopen(PATH_ArchPacientes, "rb");
         if (archPacientes == NULL){
             return 0;
@@ -293,7 +293,7 @@ int cargarPacientesEnArray(tPaciente arrayPaci[], int maxPacientes, bool mostrar
         fclose(archPacientes);
     }
 
-    // actualizamos contador global del total de registros
+    /* actualizamos contador global del total de registros */
     cantidadDePacientesTotalGral = i;
     return i;
 }
@@ -305,7 +305,7 @@ void mostrarCantidadPacientes(tPaciente array[], int cantidad){
         printf("\nNo hay pacientes cargados.\n");
         Sleep(1500);
         menu();
-        return; // importante para NO seguir ejecutando
+        return; /* importante para NO seguir ejecutando */
     }
     printf("\n===== LISTA DE PACIENTES =====\n");
     for (i = 0; i < cantidad; i++) {
@@ -313,7 +313,7 @@ void mostrarCantidadPacientes(tPaciente array[], int cantidad){
                i + 1,
                array[i].DNI,
                array[i].nombrePaciente,
-               array[i].razonDelAlta);  // <- antes usabas array[1]
+               array[i].razonDelAlta);  /* <- antes usabas array[1] */
     }
     printf("============================\n");
     int scan;

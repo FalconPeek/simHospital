@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "tads.h": "c"
+        "tads.h": "c",
+        "binariomedicos.h": "c",
+        "includesbasicos.h": "c",
+        "ui.h": "c"
     }
 }

@@ -2,15 +2,12 @@
 
 
 
-
-
-
 int main(void) {
-    clearScreen(); //Borra el cmd
+    clearScreen(); /*Borra el cmd*/
     
-    cargarDatosBase(); //Animacion de carga mas carga/creacion de archivos
+    cargarDatosBase(); /*Animacion de carga mas carga/creacion de archivos*/
 
-    menu(); //Menu principal
+    menu(); /*Menu principal*/
     return 0;
 }
 

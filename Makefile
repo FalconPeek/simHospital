@@ -13,7 +13,7 @@
 # Toolchain y flags
 # =========================
 CC      = gcc
-CFLAGS  = -std=c99 -Wall -Wextra -Wpedantic -O2 -I./dat -I./archivos
+CFLAGS  = -std=c89 -Wall -Wextra -Wpedantic -O2 -I./dat -I./archivos
 LIBS    =
 
 # DEBUG=1 -> símbolos + sanitizers (en Linux)

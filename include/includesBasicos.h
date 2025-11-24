@@ -13,10 +13,10 @@ typedef char tString[50];
 
 typedef struct {
     int DNI, matricula, nroEmpleado, nroTelefono;
-    char fechaNacimiento[9]; //(AAAAMMDD) 8 caracteres + "\0"
+    char fechaNacimiento[9]; /* (AAAAMMDD) 8 caracteres + "\0" */
 	char sexo; 
     tString domicilio, e_mail, nombreApellido;
-    int estadoLaboral; // [1]-> Tiempo Completo // [2]-> Medio Tiempo
+    int estadoLaboral; /* [1]-> Tiempo Completo // [2]-> Medio Tiempo */
 	int especialidad;
 	/*
 	Lista de especialidades medicas:
@@ -71,16 +71,19 @@ void clearScreen(void){
     char *t = getenv("TERM");
     system((t && strcmp(t, "dumb")) ? "clear" : "cls");
 
-   //printf("\nClear screen\n");
+   /*printf("\nClear screen\n");*/
 }
 
-//Variables MEDICOS
+/* Variables MEDICOS */
+
+
 FILE *archMed;
 #define MAXMEDICOS 100
 tMedico arrayDeMedicos[MAXMEDICOS];
 int cantidadDeMedicos;
 
-//Variables PACIENTES
+/*Variables PACIENTES */
+#define PATH_ArchPacientes "pacientes.dat"
 
 typedef struct nodo{
     tPaciente paciente;
@@ -96,10 +99,10 @@ FILE * archPacientes;
 #define MAXPACIENTES 100
 tPaciente arrayPacientes[MAXPACIENTES];
 
-// total de registros en el archivo (todos, con alta y sin alta)
+/* total de registros en el archivo (todos, con alta y sin alta) */
 int cantidadDePacientesTotalGral;
 
-// cantidad de pacientes que siguen sin alta (razonDelAlta == "NOALTA")
+/* cantidad de pacientes que siguen sin alta (razonDelAlta == "NOALTA") */
 int cantidadPacientesSinAlta;
 
 tColaPacientes colaPacientes;

@@ -19,13 +19,13 @@ typedef enum {
     COL_BRIGHT_WHITE
 } tColor;
 
-/**
+/*
  * Igual que printf, pero con un parámetro extra para el color.
  * Ejemplo: cprintf(COL_RED, "Error %d\n", codigo);
  */
 void cprintf(tColor color, const char *fmt, ...);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+/*------------------------------------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdarg.h>

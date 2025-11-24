@@ -2,6 +2,7 @@
 #define COLAURGENCIA_H
 
 #include "includesBasicos.h"
+#include "ui.h"
 
 void ordenarPacientesPorUrgencia(tPaciente v[], int n){
     int i, j;
@@ -38,7 +39,7 @@ bool colaVacia(tColaPacientes colaPacientes){
 void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cantidadPacientes, bool mostrar){
     int i;
 
-    // Ordenamos el array por urgencia (1 mas urgente, 5 menos)
+    /* Ordenamos el array por urgencia (1 mas urgente, 5 menos) */
     ordenarPacientesPorUrgencia(arrayP, cantidadPacientes);
 
     for(i=0;i < cantidadPacientes; i++){
@@ -101,7 +102,7 @@ void visualizarCola(tColaPacientes pPacientes){
     }
 }
 
-//Funciones necesarias para la manipulacion de archivos al momento de desencolar...
+/*Funciones necesarias para la manipulacion de archivos al momento de desencolar...*/
 void guardarPacientesEnArchivo(tPaciente pPaciente[], int cantidadPacientes){
     FILE * arch = fopen(PATH_ArchPacientes, "wb");
     if (arch == NULL){
@@ -121,7 +122,7 @@ void guardarPacientesEnArchivo(tPaciente pPaciente[], int cantidadPacientes){
 
 
 int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[]){
-    // 1) Sincronizar array con el archivo SIEMPRE
+    /* 1) Sincronizar array con el archivo SIEMPRE */
     int cantidadActual = cargarPacientesEnArray(pArrayPacientes, MAXPACIENTES, false);
 
     if(cantidadActual == 0){
@@ -130,12 +131,13 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
         return 0;
     }
 
-    // 2) Si la cola está vacía, solo devolvemos cuántos siguen sin alta
+    /* 2) Si la cola está vacía, solo devolvemos cuántos siguen sin alta*/
     if(colaVacia(*pPacientes)){
         cprintf(COL_RED, "\n[WARNING] -> No hay pacientes en la cola para dar de alta.\n");
 
         int sinAlta = 0;
-        for (int i = 0; i < cantidadActual; i++){
+        int i;
+        for (i = 0; i < cantidadActual; i++){
             if (strcmp(pArrayPacientes[i].razonDelAlta, "NOALTA") == 0){
                 sinAlta++;
             }
@@ -144,11 +146,11 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
         return sinAlta;
     }
 
-    // 3) Tomamos el nodo del frente de la cola
+    /* 3) Tomamos el nodo del frente de la cola */
     tNodoPaciente* pacienteADarDeAlta = pPacientes->principio;
     tPaciente *pac = &pacienteADarDeAlta->paciente;
 
-    // 4) Mostrar info del paciente
+    /* 4) Mostrar info del paciente */
     cprintf(COL_BRIGHT_MAGENTA, "\n\nEmpecemos con la atencion...\n");
 
     printf("\n[Tipo atencion] -> ");
@@ -189,9 +191,10 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
 
     printf("\nDescripcion del problema: %s", pac->descripcionProblema);
 
-    // 5) Buscar este paciente en el array (uso DNI como clave)
+    /* 5) Buscar este paciente en el array (uso DNI como clave)*/
     int idx = -1;
-    for (int i = 0; i < cantidadActual && idx == -1; i++){
+    int i;
+    for (i = 0; i < cantidadActual && idx == -1; i++){
         if (pArrayPacientes[i].DNI == pac->DNI){
             idx = i;
         }
@@ -200,20 +203,20 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
     if (idx == -1){
         cprintf(COL_BRIGHT_RED, "\n\n[ERROR] -> El paciente de la cola no se encontro en el array/archivo. No se registra alta.\n");
     } else {
-        // 6) Pedir razon de alta y guardar en el array (y en el nodo por prolijidad)
+        /* 6) Pedir razon de alta y guardar en el array (y en el nodo por prolijidad)*/
         printf("\n\nEscriba su razon de Alta: ");
         scanf(" %49[^\n]", pArrayPacientes[idx].razonDelAlta);
 
-        // mantener coherente la copia en la cola hasta que lo borremos
+        /* mantener coherente la copia en la cola hasta que lo borremos */
         strcpy(pac->razonDelAlta, pArrayPacientes[idx].razonDelAlta);
 
-        // 7) Guardar array completo en el archivo (incluye el alta recien puesta)
+        /* 7) Guardar array completo en el archivo (incluye el alta recien puesta)*/
         guardarPacientesEnArchivo(pArrayPacientes, cantidadActual);
     }
 
-    // 8) Desencolar el nodo de la cola
+    /* 8) Desencolar el nodo de la cola */
     if (pPacientes->principio == pPacientes->final){
-        // era el unico
+        /* era el unico*/
         pPacientes->principio = NULL;
         pPacientes->final     = NULL;
     } else {
@@ -225,16 +228,16 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
 
     free(pacienteADarDeAlta);
 
-    // 9) Recalcular cuantos siguen sin alta
+    /* 9) Recalcular cuantos siguen sin alta*/
     int sinAlta = 0;
-    for (int i = 0; i < cantidadActual; i++){
+    for (i = 0; i < cantidadActual; i++){
         if (strcmp(pArrayPacientes[i].razonDelAlta, "NOALTA") == 0){
             sinAlta++;
         }
     }
     cantidadPacientesSinAlta = sinAlta;
 
-    return sinAlta;   // NUEVA cantidad de pacientes sin alta
+    return sinAlta;   /* NUEVA cantidad de pacientes sin alta */
 }
 
 
