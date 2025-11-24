@@ -2,7 +2,6 @@
 #define COLAURGENCIA_H
 
 #include "includesBasicos.h"
-#include "colores.h"
 
 /*Funcion para ordenar un array por urgencia*/
 void ordenarPacientesPorUrgencia(tPaciente v[], int n){
@@ -25,7 +24,7 @@ void iniciarCola(tColaPacientes* colaPacientes, bool mostrar){
     if(mostrar){
         colaPacientes->principio = NULL;
     colaPacientes->final = NULL;
-    cprintf(COL_GREEN, "\n[SUCCESS] -> Cola de Pacientes Iniciada...\n");
+    cprintf(COL_GREEN, "\n[EXITO] -> "); printf("Cola de Pacientes Iniciada...\n");
     Sleep(1000);    
     } else {
         colaPacientes->principio = NULL;
@@ -59,7 +58,7 @@ void agregarPacientes(tColaPacientes* colaPacientes, tPaciente* arrayP, int cant
             } 
         } else { continue; }
     }
-    if(mostrar) {cprintf(COL_BLUE, "\nSe agregaron %d pacientes a la cola", i);}
+    if(mostrar) {cprintf(COL_GREEN, "\nSe agregaron %d pacientes a la cola", i);}
 } 
 
 /*Funcion que devuelve la cantidad de pacientes en la cola*/
@@ -81,43 +80,49 @@ int cantidadPacientesEnCola(tColaPacientes colaPacientes){
 
 /*Funcion que se usa para visualizar la cola en orden de urgencia*/
 void visualizarCola(tColaPacientes pPacientes){
-    cprintf(COL_BRIGHT_WHITE, "\n-----------------------------------------\n");
-    cprintf(COL_BRIGHT_WHITE, "\t*** Pacientes en espera ***");
-    cprintf(COL_BRIGHT_WHITE, "\n-----------------------------------------\n");
+    cprintf(COL_BRIGHT_CYAN, "\n-----------------------------------------\n");
+    cprintf(COL_BRIGHT_CYAN, "\t*** Pacientes en espera ***");
+    cprintf(COL_BRIGHT_CYAN, "\n-----------------------------------------\n");
 
     if(colaVacia(pPacientes)){
-        cprintf(COL_BRIGHT_MAGENTA, "\n\t[WARNING] -> ");
+        cprintf(COL_BRIGHT_MAGENTA, "\n[WARNING] -> ");
         cprintf(COL_BRIGHT_WHITE, "La cola esta vacia...\n");
         Sleep(2000);
         menu();
     } else {
+        clearScreen();
+
+        cprintf(COL_BRIGHT_CYAN, "\n-----------------------------------------\n");
+        cprintf(COL_BRIGHT_CYAN, "\t*** Pacientes en espera ***");
+        cprintf(COL_BRIGHT_CYAN, "\n-----------------------------------------\n");
+
         tNodoPaciente* listaPacientes = pPacientes.principio;
         tString NOMBRE, DNI, CODIGO;
         strcpy(NOMBRE, "Nombre Completo");
         strcpy(DNI, "Documento");
         strcpy(CODIGO, "Urgencia");
 
-        cprintf(COL_BRIGHT_WHITE, "%-30s %-10s %s\n", NOMBRE, DNI, CODIGO);
+        cprintf(COL_BRIGHT_CYAN, "%-30s %-10s %-15s\n", NOMBRE, DNI, CODIGO);
         while (listaPacientes != NULL){
-            printf("%-30s\t%-8d\t", 
+            printf("%-30s %-10d", 
                 listaPacientes->paciente.nombrePaciente,
                 listaPacientes->paciente.DNI
             );
             switch(listaPacientes->paciente.urgencia){
                 case 1:
-                    cprintf(COL_RED, "Atencion Inmediata\n");
+                    cprintf(COL_RED, " Atencion Inmediata\n");
                     break;
                 case 2:
-                    cprintf(COL_YELLOW, "Urgencia Alta\n");
+                    cprintf(COL_YELLOW, " Urgencia Alta\n");
                     break;
                 case 3:
-                    cprintf(COL_MAGENTA, "Atencion Media\n");
+                    cprintf(COL_MAGENTA, " Atencion Media\n");
                     break;
                 case 4:
-                    cprintf(COL_CYAN, "Atencion Baja\n");
+                    cprintf(COL_CYAN, " Atencion Baja\n");
                     break;
                 case 5:
-                    cprintf(COL_GREEN, "No urgente\n");
+                    cprintf(COL_GREEN, " No urgente\n");
                     break;
                 }
             listaPacientes = listaPacientes->siguientePaciente;
@@ -201,7 +206,7 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
         case 7: printf("O-");  break;
     }
 
-    printf("\nContacto Emergencia: %d\tDNI: %d\tObra Social: ", pac->contactoEmergencia, pac->DNI);
+    printf("\nContacto Emergencia: %d\nDNI: %d\nObra Social: ", pac->contactoEmergencia, pac->DNI);
     switch (pac->obraSocial){
         case 0: cprintf(COL_BRIGHT_BLUE,    "Sancor Salud");  break;
         case 1: cprintf(COL_BRIGHT_BLUE,    "IOFA");          break;
@@ -225,7 +230,7 @@ int diagnosticarDarAlta(tColaPacientes* pPacientes, tPaciente pArrayPacientes[])
     }
 
     if (idx == -1){
-        cprintf(COL_BRIGHT_RED, "\n\n[ERROR] -> El paciente de la cola no se encontro en el array/archivo. No se registra alta.\n");
+        cprintf(COL_BRIGHT_RED, "\n\n[ERROR] -> "); printf("El paciente de la cola no se encontro en el array/archivo. No se registra alta.\n");
     } else {
         /* 6) Pedir razon de alta y guardar en el array (y en el nodo por prolijidad)*/
         printf("\n\nEscriba su razon de Alta: ");

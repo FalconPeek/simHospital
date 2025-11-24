@@ -13,4 +13,3 @@ int main(void) {
     Porque el programa esta funcionando con exit(EXIT_SUCCESS)
     que cuando se elige sale del programa*/
 }
-

@@ -1,8 +1,6 @@
 #ifndef TDA_H
 #define TDA_H
 
-/* Includes para el Disenio intefaz */
-#include "colores.h"
 
 /* Include Base */
 #include "includesBasicos.h"

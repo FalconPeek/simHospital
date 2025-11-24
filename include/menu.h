@@ -2,7 +2,6 @@
 #define MENU_H
 
 #include "includesBasicos.h"
-#include "colores.h"
 
 void switchMenu(){
     int opcion;
@@ -18,6 +17,7 @@ void switchMenu(){
             menu();
             break;
         case 2:
+            
             visualizarCola(colaPacientes);
         break;
         case 3:
@@ -30,7 +30,7 @@ void switchMenu(){
             menuMedicos(0);
         break;
         case 6:
-            cprintf(COL_BRIGHT_WHITE, "\n\nCerrando programa...\n\n");
+            cprintf(COL_BRIGHT_CYAN, "\n\nCerrando programa...\n\n");
             Sleep(1500);
             exit(EXIT_SUCCESS);
         break;
@@ -45,29 +45,29 @@ void cargarDatosBase(){
         {
         case 0:
         clearScreen();
-            cprintf(COL_BRIGHT_WHITE, "\nCargando programa.\n");
+            cprintf(COL_WHITE, "\nCargando programa.\n");
             Sleep(1000);
             break;
         case 1:
         clearScreen();
-            cprintf(COL_BRIGHT_WHITE, "\nCargando programa..\n");
+            cprintf(COL_YELLOW, "\nCargando programa..\n");
             Sleep(1000);
             break;
         case 2:
         clearScreen();
-            cprintf(COL_BRIGHT_WHITE, "\nCargando programa...\n\nCargando bases de datos.");
+            cprintf(COL_BRIGHT_YELLOW, "\nCargando programa...\n\nCargando bases de datos.");
             Sleep(1000);
             
             break;
         case 3:
             clearScreen();
-            cprintf(COL_BRIGHT_WHITE, "\nCargando bases de datos..\n");
+            cprintf(COL_BRIGHT_YELLOW, "\nCargando bases de datos..\n");
             Sleep(1000);
             
             break;
         case 4:
             clearScreen();
-            cprintf(COL_BRIGHT_WHITE, "\nCargando bases de datos...\n");
+            cprintf(COL_BRIGHT_YELLOW, "\nCargando bases de datos...\n");
             cantidadDeMedicos = cargarMedicosEnArray(arrayDeMedicos, MAXMEDICOS, true);
             Sleep(1000);
             break;
@@ -80,10 +80,10 @@ void cargarDatosBase(){
             Sleep(1000);
             agregarPacientes(&colaPacientes, arrayPacientes, cantidadDePacientesTotalGral, true);
             Sleep(500);
-            if(cantidadDePacientesTotalGral == cantidadPacientesEnCola(colaPacientes)) cprintf(COL_BRIGHT_WHITE, "\nTotalidad de pacientes agregados correctamente\n");
+            if(cantidadDePacientesTotalGral == cantidadPacientesEnCola(colaPacientes)) cprintf(COL_BRIGHT_CYAN, "\nTotalidad de pacientes agregados correctamente\n");
         break;
         case 7:
-            cprintf(COL_BRIGHT_WHITE, "\nPrograma ya cargado y compilado... Iniciando...\n\n");
+            cprintf(COL_WHITE, "\nPrograma ya cargado y compilado... Iniciando...\n\n");
             Sleep(1000);    
         break;
         }
@@ -94,16 +94,16 @@ void menu(){
     
     clearScreen();
 
-    cprintf(COL_BRIGHT_GREEN, "\t=============================================\n");
-    cprintf(COL_BRIGHT_GREEN, "\t================Menu Principal===============\n");
-    cprintf(COL_BRIGHT_GREEN, "\t=============================================\n");
+    cprintf(COL_BRIGHT_CYAN, "  =============================================\n");
+    cprintf(COL_BRIGHT_CYAN, "  ================Menu Principal===============\n");
+    cprintf(COL_BRIGHT_CYAN, "  =============================================\n");
 
-    cprintf(COL_BRIGHT_WHITE, "\n[1]"); cprintf(COL_RESET, " - Agregar paciente");
-    cprintf(COL_BRIGHT_WHITE, "\n[2]"); cprintf(COL_RESET, " - Ver cola de Pacientes");
-    cprintf(COL_BRIGHT_WHITE, "\n[3]"); cprintf(COL_RESET, " - Ver lista de pacientes por DNI y Nombre");
-    cprintf(COL_BRIGHT_WHITE, "\n[4]"); cprintf(COL_RESET, " - Mostrar registro de pacientes");
-    cprintf(COL_BRIGHT_WHITE, "\n[5]"); cprintf(COL_RESET, " - Abrir menu de medicos (privado)");
-    cprintf(COL_BRIGHT_WHITE, "\n[6]"); cprintf(COL_RESET, " - Cerra programa");
+    cprintf(COL_BRIGHT_YELLOW, "\n[1]"); cprintf(COL_RESET, " - Agregar paciente");
+    cprintf(COL_BRIGHT_YELLOW, "\n[2]"); cprintf(COL_RESET, " - Ver cola de Pacientes");
+    cprintf(COL_BRIGHT_YELLOW, "\n[3]"); cprintf(COL_RESET, " - Ver lista de pacientes por DNI y Nombre");
+    cprintf(COL_BRIGHT_YELLOW, "\n[4]"); cprintf(COL_RESET, " - Mostrar registro de pacientes");
+    cprintf(COL_BRIGHT_YELLOW, "\n[5]"); cprintf(COL_RESET, " - Abrir menu de medicos (privado)");
+    cprintf(COL_BRIGHT_YELLOW, "\n[6]"); cprintf(COL_RESET, " - Cerra programa");
     cprintf(COL_BRIGHT_BLUE, "\n\nOpcion: ");
 
 

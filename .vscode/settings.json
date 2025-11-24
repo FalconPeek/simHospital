@@ -3,6 +3,8 @@
         "tads.h": "c",
         "binariomedicos.h": "c",
         "includesbasicos.h": "c",
-        "ui.h": "c"
+        "ui.h": "c",
+        "colores.h": "c",
+        "stdio.h": "c"
     }
 }
